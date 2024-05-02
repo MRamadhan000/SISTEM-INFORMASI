@@ -3,10 +3,7 @@ import bahanPangan.BahanPangan;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
-public class Pedagang {
-
-    private final static String filePathBahanPangan = "src/bahanPangan/dataBahanPangan.txt";
-    private final static String filePathDataPO = "src/bahanPangan/dataPreOrder.txt";
+public class Penjual {
     private static ArrayList<String> usernames = new ArrayList<>();
     private static ArrayList<String> passwords = new ArrayList<>();
     static {
@@ -27,23 +24,23 @@ public class Pedagang {
         int choose;
         boolean isRun = true;
         while (isRun) {
-            System.out.println("\n====== MENU PEDAGANG =======");
+            System.out.println("\n====== MENU PENJUAL =======");
             System.out.print("1. Tampilkan bahan pangan di Pasar\n2. Tambahkan bahan pangan\n3. Tampilkan Pre-Order yang tersedia\n4. Layani Pre-Order\n5. Keluar\nMasukan pilihan anda (1-5): ");
             choose = inputObj.nextInt();
             switch (choose) {
                 case 1:
-                    BahanPangan.displayData(filePathBahanPangan,"BAHAN PANGAN");
+                    BahanPangan.displayData(Admin.getFilePathBahanPangan(),"BAHAN PANGAN");
                     break;
                 case 2:
-                    Pedagang.tambahPangan();
+                    Penjual.tambahPangan();
                     break;
                 case 3:
-                    BahanPangan.displayData(filePathDataPO, "PRE-ORDER");
+                    BahanPangan.displayData(Admin.getFilePathDataPO(), "PRE-ORDER");
                     break;
                 case 4:
-                    if (BahanPangan.isHaveData(filePathDataPO)){
-                        BahanPangan.displayData(filePathDataPO,"PRE-ORDER");
-                        Pedagang.layaniPreOrder();
+                    if (BahanPangan.isHaveData(Admin.getFilePathDataPO())){
+                        BahanPangan.displayData(Admin.getFilePathDataPO(),"PRE-ORDER");
+                        Penjual.layaniPreOrder();
                     }
                     else
                         System.out.println("TIDAK ADA PRE-ORDER YANG TERSEDIA");
@@ -68,7 +65,7 @@ public class Pedagang {
         return false;
     }
 
-    public static void loginActionPedagang() {
+    public static void loginActionPenjual() {
         System.out.print("Masukkan username anda: ");
         String username = inputObj.nextLine();
         System.out.print("Masukkan password anda: ");
@@ -83,13 +80,12 @@ public class Pedagang {
     
     public static void layaniPreOrder(){
         inputObj.nextLine();
-        System.out.println("Masukkan id yang ingin anda terima : ");
+        System.out.print("Masukkan id yang ingin anda terima : ");
         String id = inputObj.nextLine();
-        boolean isFound = BahanPangan.isHaveId(Pedagang.getFilePathDataPO(),id);
-        if(isFound){
-            ArrayList<String> data = BahanPangan.removeData(Pedagang.getFilePathDataPO(),id);
-            BahanPangan.writeToFile(Pedagang.getFilePathDataPO(),data);
-        }else
+        boolean isFound = BahanPangan.isHaveId(Admin.getFilePathDataPO(),id);
+        if(isFound)
+            BahanPangan.removeData(Admin.getFilePathDataPO(),id);
+        else
             System.out.println(id + " TIDAK DITEMUKAN");
 
     }
@@ -109,9 +105,8 @@ public class Pedagang {
         if(isValid){
             System.out.print("Masukkan jumlah keseluruhan: ");
             double jumlah = inputObj.nextDouble();
-            BahanPangan bahanPangan = new BahanPangan(jenis,harga,jumlah,Pedagang.generateID());
-            ArrayList<String> data = BahanPangan.appeandToTxt(bahanPangan,Pedagang.getFilePathBahanPangan());
-            BahanPangan.writeToFile(Pedagang.getFilePathBahanPangan(),data);
+            BahanPangan bahanPangan = new BahanPangan(jenis,harga,jumlah, Penjual.generateID());
+            BahanPangan.appeandToTxt(bahanPangan, Admin.getFilePathBahanPangan());
         }
         else
             System.out.println("MAAF HARGA YANG DITAWARKAN TIDAK SESUAI");
@@ -125,11 +120,5 @@ public class Pedagang {
             return true;
         return false;
     }
-    public static String getFilePathBahanPangan() {
-        return filePathBahanPangan;
-    }
 
-    public static String getFilePathDataPO(){
-        return filePathDataPO;
-    }
 }

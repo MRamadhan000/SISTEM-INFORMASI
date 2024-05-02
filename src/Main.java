@@ -1,5 +1,5 @@
 import user.Admin;
-import user.Pedagang;
+import user.Penjual;
 import user.Pembeli;
 
 import java.util.Scanner;
@@ -11,12 +11,11 @@ public class Main {
         int choose;
         while (isRun) {
             System.out.println("===== MENU =======");
-            System.out.print(
-                    "1. Login sebagai pedagang\n2. Login sebagai pembeli\n3. Login sebagai admin\n4. Exit\nMasukkan pilihan anda (1-4): ");
+            System.out.print("1. Login sebagai penjual\n2. Login sebagai pembeli\n3. Login sebagai admin\n4. Exit\nMasukkan pilihan anda (1-4): ");
             choose = inputObj.nextInt();
             switch (choose) {
                 case 1:
-                    Pedagang.loginActionPedagang();
+                    Penjual.loginActionPenjual();
                     break;
                 case 2:
                     Pembeli.loginActionPembeli();

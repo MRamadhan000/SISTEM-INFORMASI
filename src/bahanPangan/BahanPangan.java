@@ -75,7 +75,7 @@ public class BahanPangan{
         return false;
     }
 
-    public static ArrayList<String> removeData(String filePath, String id){
+    public static void removeData(String filePath, String id){
         String line;
         ArrayList<String> data = new ArrayList<>();
         try {
@@ -95,7 +95,7 @@ public class BahanPangan{
         } catch (IOException e) {
             System.err.println("Error reading the file: " + e.getMessage());
         }
-        return data;
+        BahanPangan.writeToFile(filePath,data);
     }
 
     public static double[] getInfoPangan(String filePath,String id){
@@ -120,7 +120,7 @@ public class BahanPangan{
         return arr;
     }
 
-    public static ArrayList<String> appeandToTxt(BahanPangan bahanPangan, String filePath) {
+    public static void appeandToTxt(BahanPangan bahanPangan, String filePath) {
             boolean isFound = false;
             String dataString = String.format("%-15s%-20.0f%-15s%-10s", bahanPangan.getJenis(), bahanPangan.getHargaSatuan(), bahanPangan.getJumlahBahan(), bahanPangan.getId());
             ArrayList<String> data = new ArrayList<>();
@@ -143,10 +143,10 @@ public class BahanPangan{
             } catch (IOException e) {
                 System.err.println("Error reading the file: " + e.getMessage());
             }
-            return data;
+            BahanPangan.writeToFile(filePath,data);
     }
 
-    public static ArrayList<String> editData(String filePath,String id, double jumlahBeli) {
+    public static void editData(String filePath,String id, double jumlahBeli) {
         String line;
         ArrayList<String> arr = new ArrayList<>();
         try {
@@ -157,10 +157,6 @@ public class BahanPangan{
             }
             while ((line = reader.readLine()) != null) {
                 String[] partsData = line.split("\\s+");
-                System.out.println("Indeks 0" + partsData[0]);
-                System.out.println("Indeks 1 " + partsData[1] );
-                System.out.println("Indeks 2 " + partsData[2]);
-                System.out.println("Indeks 3 " + partsData[3]);
                 if (partsData[3].equals(id)){
                     double jumlahStok = Double.parseDouble(partsData[2]);
                     double hargaJual = Double.parseDouble(partsData[1]);
@@ -174,7 +170,7 @@ public class BahanPangan{
         } catch (IOException e) {
             System.err.println("Error reading/writing the file: " + e.getMessage());
         }
-    return arr;
+    BahanPangan.writeToFile(filePath,arr);
     }
 
     public static void writeToFile(String fileName, List<String> lines) {

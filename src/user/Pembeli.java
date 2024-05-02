@@ -45,12 +45,11 @@ public class Pembeli {
         boolean isRun = true;
         while (isRun) {
             System.out.println("===== MENU PEMBELI ======");
-            System.out.print(
-                    "1. Tampilkan bahan pangan yang tersedia\n2. Beli bahan pangan\n3. Buat pesanan\n4. Exit\nMasukan pilihan anda (1-4) : ");
+            System.out.print("1. Tampilkan bahan pangan yang tersedia\n2. Beli bahan pangan\n3. Buat pesanan\n4. Exit\nMasukan pilihan anda (1-4) : ");
             choose = inputObj.nextInt();
             switch (choose) {
                 case 1:
-                    BahanPangan.displayData(Pedagang.getFilePathBahanPangan(), "BAHAN PANGAN");
+                    BahanPangan.displayData(Admin.getFilePathBahanPangan(), "BAHAN PANGAN");
                     break;
                 case 2:
                     Pembeli.beliBahanPangan();
@@ -60,6 +59,7 @@ public class Pembeli {
                     break;
                 case 4:
                     isRun = false;
+                    inputObj.nextLine();
                     break;
                 default:
                     System.out.println("Masukkan angka yang benar");
@@ -71,13 +71,12 @@ public class Pembeli {
     public static void beliBahanPangan() {
         inputObj.nextLine();
         String id;
-        BahanPangan.displayData(Pedagang.getFilePathBahanPangan(), "BAHAN PANGAN");
+        BahanPangan.displayData(Admin.getFilePathBahanPangan(), "BAHAN PANGAN");
         System.out.print("Masukkan id yang ingin anda beli : ");
         id = inputObj.nextLine();
-        boolean isFoundId = BahanPangan.isHaveId(Pedagang.getFilePathBahanPangan(), id);
-        System.out.println("id = " + isFoundId);
+        boolean isFoundId = BahanPangan.isHaveId(Admin.getFilePathBahanPangan(), id);
         if (isFoundId) {
-            double jumlahBeli, uang, arrPangan[] = BahanPangan.getInfoPangan(Pedagang.getFilePathBahanPangan(), id);
+            double jumlahBeli, uang, arrPangan[] = BahanPangan.getInfoPangan(Admin.getFilePathBahanPangan(), id);
             double hargaJual = arrPangan[0], jumlahAwal = arrPangan[1];
             System.out.println(" ======= JUMLAH YANG TERSEDIA " + jumlahAwal + " ==========");
             do {
@@ -97,9 +96,9 @@ public class Pembeli {
             } while (uang != (hargaJual * jumlahBeli));
             System.out.println("PEMBELIAN BERHASIL");
             if (jumlahAwal - jumlahBeli < 1)
-                Pembeli.removeItem(id);
+                BahanPangan.removeData(Admin.getFilePathBahanPangan(), id);
             else if (jumlahAwal - jumlahBeli > 0)
-                Pembeli.editData(id, jumlahBeli);
+                BahanPangan.editData(Admin.getFilePathBahanPangan(), id, jumlahBeli);
         } else
             System.out.println(id + " TIDAK DITEMUKAN");
     }
@@ -119,18 +118,8 @@ public class Pembeli {
         double harga = inputObj.nextDouble();
         System.out.print("Masukkan jumlah keseluruhan: ");
         double jumlah = inputObj.nextDouble();
-        BahanPangan bahanPangan = new BahanPangan(jenis, harga, jumlah, Pedagang.generateID());
-        ArrayList<String> data = BahanPangan.appeandToTxt(bahanPangan, Pedagang.getFilePathDataPO());
-        BahanPangan.writeToFile(Pedagang.getFilePathDataPO(), data);
+        BahanPangan bahanPangan = new BahanPangan(jenis, harga, jumlah, Penjual.generateID());
+        BahanPangan.appeandToTxt(bahanPangan, Admin.getFilePathDataPO());
     }
 
-    public static void removeItem(String id) {
-        ArrayList<String> data = BahanPangan.removeData(Pedagang.getFilePathBahanPangan(), id);
-        BahanPangan.writeToFile(Pedagang.getFilePathBahanPangan(), data);
-    }
-
-    public static void editData(String id, double jumlah) {
-        ArrayList<String> arr = BahanPangan.editData(Pedagang.getFilePathBahanPangan(), id, jumlah);
-        BahanPangan.writeToFile(Pedagang.getFilePathBahanPangan(), arr);
-    }
 }

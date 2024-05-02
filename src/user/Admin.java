@@ -5,6 +5,8 @@ import java.text.SimpleDateFormat;
 import java.util.Scanner;
 
 public class Admin {
+    private final static String filePathBahanPangan = "src/bahanPangan/dataBahanPangan.txt";
+    private final static String filePathDataPO = "src/bahanPangan/dataPreOrder.txt";
     private final static String[] arrJenisPangan = {"Padi","Jagung","Kedelai"};
     private static double[] arrHargaPangan = {8000,7000,10000};//SET HARGA
     private static String date;
@@ -13,7 +15,7 @@ public class Admin {
     static String pass = "admin123";
     public static boolean isFileExist(){
         boolean isHaveData = false;
-        File file = new File(Pedagang.getFilePathBahanPangan());
+        File file = new File(Admin.getFilePathBahanPangan());
         if(file.exists())
             return true;
         else
@@ -69,6 +71,14 @@ public class Admin {
 
     public static void setArrHargaJenis(double hargaJenis,int index) {
         Admin.arrHargaPangan[index] = hargaJenis;
+    }
+
+    public static String getFilePathBahanPangan() {
+        return filePathBahanPangan;
+    }
+
+    public static String getFilePathDataPO(){
+        return filePathDataPO;
     }
 
 }
