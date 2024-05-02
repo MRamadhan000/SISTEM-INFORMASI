@@ -1,3 +1,4 @@
 21/03/2023
 Jenis          HargaPerKg          Jumlah         ID
 Padi           7000                10             7743F     
+Padi           8000                2.0            8660X     

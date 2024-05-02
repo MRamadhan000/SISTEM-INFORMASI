@@ -8,7 +8,9 @@ public class Admin {
     private final static String[] arrJenisPangan = {"Padi","Jagung","Kedelai"};
     private static double[] arrHargaPangan = {8000,7000,10000};//SET HARGA
     private static String date;
-
+    static Scanner inputObj = new Scanner(System.in);
+    static String user = "admin";
+    static String pass = "admin123";
     public static boolean isFileExist(){
         boolean isHaveData = false;
         File file = new File(Pedagang.getFilePathBahanPangan());
@@ -18,8 +20,23 @@ public class Admin {
             return false;
     }
 
+    public static void loginAdmin(){
+        System.out.print("Username: ");
+        String username = inputObj.nextLine();
+        System.out.print("Password: ");
+        String password = inputObj.nextLine();
+        if (username.equals(user) && password.equals(pass)) {
+            System.out.println("Login admin anda berhasil!!");
+            menu();
+        } else {
+            System.out.println("Sandi atau password salah!!");
+        }
+    }
+    public static void menu(){
+        //menu
+    }
+
     public static void setPasar(){
-        Scanner inputObj = new Scanner(System.in);
         double harga;
         for (int i = 0; i < 3; i++){
             System.out.print("Masukkan harga pasar untuk " + Admin.getJenis(i) + " : ");

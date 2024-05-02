@@ -1,3 +1,4 @@
+import user.Admin;
 import user.Pedagang;
 import user.Pembeli;
 
@@ -8,18 +9,22 @@ public class Main {
         Scanner inputObj = new Scanner(System.in);
         boolean isRun = true;
         int choose;
-        while (isRun){
+        while (isRun) {
             System.out.println("===== MENU =======");
-            System.out.print("1. Login sebagai pedagang\n2. Login sebagai pembeli\n3. Exit\nMasukkan pilihan anda (1-2): ");
+            System.out.print(
+                    "1. Login sebagai pedagang\n2. Login sebagai pembeli\n3. Login sebagai admin\n4. Exit\nMasukkan pilihan anda (1-4): ");
             choose = inputObj.nextInt();
-            switch (choose){
+            switch (choose) {
                 case 1:
-                    Pedagang.menu();
+                    Pedagang.loginActionPedagang();
                     break;
                 case 2:
-                    Pembeli.menu();
+                    Pembeli.loginActionPembeli();
                     break;
                 case 3:
+                    Admin.loginAdmin();
+                    break;
+                case 4:
                     isRun = false;
                     break;
                 default:
@@ -29,9 +34,9 @@ public class Main {
         }
 
     }
-    public static void addAutoPangan(){
+
+    public static void addAutoPangan() {
 
     }
-
 
 }

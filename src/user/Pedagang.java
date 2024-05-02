@@ -7,6 +7,12 @@ public class Pedagang {
 
     private final static String filePathBahanPangan = "src/bahanPangan/dataBahanPangan.txt";
     private final static String filePathDataPO = "src/bahanPangan/dataPreOrder.txt";
+    private static ArrayList<String> usernames = new ArrayList<>();
+    private static ArrayList<String> passwords = new ArrayList<>();
+    static {
+        usernames.add("user1");
+        passwords.add("pass123");
+    }
     private static Scanner inputObj = new Scanner(System.in);
     public static String generateID() {
         Random random = new Random();
@@ -15,6 +21,7 @@ public class Pedagang {
         char letter = (char) (random.nextInt(26) + 'A');
         return String.format("%02d%02d%c", number1, number2, letter);
     }
+
 
     public static void menu(){
         int choose;
@@ -51,6 +58,29 @@ public class Pedagang {
         }
     }
 
+    public static boolean loginValidasi(String username, String password) {
+        int index = usernames.indexOf(username);
+        if (index != -1) {
+            if (passwords.get(index).equals(password)) {
+                return true; 
+            }
+        }
+        return false;
+    }
+
+    public static void loginActionPedagang() {
+        System.out.print("Masukkan username anda: ");
+        String username = inputObj.nextLine();
+        System.out.print("Masukkan password anda: ");
+        String password = inputObj.nextLine();
+        if (loginValidasi(username, password)) {
+            System.out.println("Login berhasil!");
+            menu();
+        } else {
+            System.out.println("Username atau password salah!");
+        }
+    }
+    
     public static void layaniPreOrder(){
         inputObj.nextLine();
         System.out.println("Masukkan id yang ingin anda terima : ");
@@ -102,6 +132,4 @@ public class Pedagang {
     public static String getFilePathDataPO(){
         return filePathDataPO;
     }
-
-
 }
