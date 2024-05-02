@@ -184,7 +184,7 @@ public class BahanPangan{
                 writer.write(line + System.lineSeparator()); // Menambahkan baris baru setelah setiap baris
             }
             writer.close();
-            System.out.println("Data berhasil dieditk dalam file.");
+            System.out.println("Data berhasil diedit dalam file.");
         } catch (IOException e) {
             System.out.println("Terjadi kesalahan saat menulis ke file: " + fileName);
             e.printStackTrace();

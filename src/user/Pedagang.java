@@ -89,8 +89,8 @@ public class Pedagang {
 
     public static boolean cekHargaPasar(int choose,double harga){
         double hargaPasar = Admin.getHargaJenis(choose-1),hargaMaks,hargaMin;
-        hargaMaks = (120.0/100) * hargaPasar;
-        hargaMin = (20.0/100) * hargaPasar;
+        hargaMaks = 1.2 * hargaPasar;
+        hargaMin = 0.8 * hargaPasar;
         if(harga >= hargaMin && harga <= hargaMaks)
             return true;
         return false;

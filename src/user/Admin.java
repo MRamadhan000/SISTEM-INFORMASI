@@ -6,7 +6,7 @@ import java.util.Scanner;
 
 public class Admin {
     private final static String[] arrJenisPangan = {"Padi","Jagung","Kedelai"};
-    private static double[] arrHargaPangan = new double[3];
+    private static double[] arrHargaPangan = {8000,7000,10000};//SET HARGA
     private static String date;
 
     public static boolean isFileExist(){
