@@ -1,3 +1,6 @@
 21/03/2023
-Jenis       HargaPerKg      JumlahPerKg    IdBahanPangan     IdPenjual
-Kedelai      8132.0           72.0            3924Y            11234    
+IdBahan      Jenis        HargaPerKg    JumlahAwal      JumlahAkhir      IdPenjual
+8132W        Kedelai       8000.0          67.0            67.0            000XX
+6010V        Kedelai       8100.0          88.0            8.0             000XX
+5605N        Padi          8400.0          33.0            33.0            000XX
+1787K        Jagung        8250.0          20.0            20.0            000XX

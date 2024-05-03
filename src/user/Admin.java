@@ -82,6 +82,32 @@ public class Admin {
             return false;
     }
 
+    public static void removeData(String filePath,String role){
+        String line;
+        ArrayList<String> data = new ArrayList<>();
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader(filePath));
+            for (int i = 0; i < 2;i++) {
+                line = reader.readLine();
+                data.add(line);
+            }
+            while ((line = reader.readLine()) != null) {
+                String[] partsData = line.split("\\s+");
+                if(role.equals("Penjual")){
+                    if(partsData[4].equals("0.0"))
+                        continue;
+                }else
+                    if(!partsData[4].equals("BELUM"))
+                        continue;
+                    data.add(line);
+            }
+            reader.close();
+        } catch (IOException e) {
+            System.err.println("Error reading the file: " + e.getMessage());
+        }
+        BahanPangan.writeToFile(filePath,data);
+    }
+
     public static void loginAdmin(){
         System.out.print("Username: ");
         String username = inputObj.nextLine();

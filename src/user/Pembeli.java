@@ -1,6 +1,10 @@
 package user;
 
 import bahanPangan.BahanPangan;
+
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -34,30 +38,32 @@ public class Pembeli {
         String password = inputObj.nextLine();
         if (loginValidasi(username, password)) {
             System.out.println("Login berhasil!");
-            menu();
+            menu(username);
         } else {
             System.out.println("Username atau password salah!");
         }
     }
 
-    public static void menu() {
+    public static void menu(String userId) {
         int choose;
         boolean isRun = true;
         while (isRun) {
             System.out.println("===== MENU PEMBELI ======");
-            System.out.print("1. Tampilkan bahan pangan yang tersedia\n2. Beli bahan pangan\n3. Buat pesanan\n4. Exit\nMasukan pilihan anda (1-4) : ");
+            System.out.print("1. Tampilkan bahan pangan yang tersedia\n2. Beli bahan pangan\n3. Buat pesanan\n4. Tampilkan Notifikasi\n5.. Exit\nMasukan pilihan anda (1-4) : ");
             choose = inputObj.nextInt();
             switch (choose) {
                 case 1:
-                    BahanPangan.displayData(Admin.getFilePathBahanPangan(), "BAHAN PANGAN");
+                    BahanPangan.displayDataPangan(Admin.getFilePathBahanPangan(), "BAHAN PANGAN");
                     break;
                 case 2:
                     Pembeli.beliBahanPangan();
                     break;
                 case 3:
-                    Pembeli.buatPreOrder();
+                    Pembeli.buatPreOrder(userId);
                     break;
                 case 4:
+                    Pembeli.displayNotif(Admin.getFilePathDataPO(),userId);
+                case 5:
                     isRun = false;
                     break;
                 default:
@@ -70,7 +76,7 @@ public class Pembeli {
     public static void beliBahanPangan() {
         inputObj.nextLine();
         String id;
-        BahanPangan.displayData(Admin.getFilePathBahanPangan(), "BAHAN PANGAN");
+        BahanPangan.displayDataPangan(Admin.getFilePathBahanPangan(), "BAHAN PANGAN");
         System.out.print("Masukkan id yang ingin anda beli : ");
         id = inputObj.nextLine();
         boolean isFoundId = BahanPangan.isHaveId(Admin.getFilePathBahanPangan(), id);
@@ -94,15 +100,12 @@ public class Pembeli {
                     System.out.println("Uang anda kelebihan");
             } while (uang != (hargaJual * jumlahBeli));
             System.out.println("PEMBELIAN BERHASIL");
-            if (jumlahAwal - jumlahBeli < 1)
-                BahanPangan.removeData(Admin.getFilePathBahanPangan(), id);
-            else if (jumlahAwal - jumlahBeli > 0)
-                BahanPangan.editData(Admin.getFilePathBahanPangan(), id, jumlahBeli);
+            BahanPangan.editDataPangan(Admin.getFilePathBahanPangan(),id,jumlahBeli);
         } else
             System.out.println(id + " TIDAK DITEMUKAN");
     }
 
-    public static void buatPreOrder() {
+    public static void buatPreOrder(String userId) {
         String jenis;
         int choose;
         System.out.print(
@@ -118,7 +121,33 @@ public class Pembeli {
         System.out.print("Masukkan jumlah keseluruhan: ");
         double jumlah = inputObj.nextDouble();
         BahanPangan bahanPangan = new BahanPangan(jenis, harga, jumlah, Penjual.generateID());
-        BahanPangan.appeandToTxt(bahanPangan, Admin.getFilePathDataPO());
+        BahanPangan.appeandToTxt(bahanPangan, Admin.getFilePathDataPO(),"Pembeli",userId);
+    }
+
+    public static void displayNotif(String filePath,String userId){
+        //boolean isFoundId = BahanPangan.isHaveId(filePath,userId);
+        boolean isFoundId = false;
+        String line;
+            try {
+                BufferedReader reader = new BufferedReader(new FileReader(filePath));
+                line = reader.readLine();
+                line = reader.readLine();
+
+                while ((line = reader.readLine()) != null) {
+                    String[] partsData = line.split("\\s+");
+                    if (partsData[5].equals(userId) &&!partsData[4].equals("BELUM")){
+                        isFoundId = true;
+                        System.out.println("PESANAN ANDA TELAH DENGAN ID " + partsData[0] +" DITERIMA OLEH " + partsData[4]);
+                        System.out.printf("=   %-13s=    %-15s=   %-15s=   %-12s=%n", "Jenis", "Harga PerKg", "Keterangan","Id Pangan");
+                        System.out.printf("=   %-13s=    %-15s=   %-15s=    %-9s  =%n", partsData[1], partsData[2], partsData[4], partsData[0]);
+                    }
+                }
+                reader.close();
+            } catch (IOException e) {
+                System.err.println("Error reading the file: " + e.getMessage());
+            }
+        if(!isFoundId)
+            System.out.println("TIDAK ADA NOTIFIKASI");
     }
 
 }

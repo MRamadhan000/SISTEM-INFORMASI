@@ -1,6 +1,6 @@
 Penjual
 Id           Password
-123450         ABC12   
+123450         ABC12
 1923X          2827D
 1911A          1234X
 -

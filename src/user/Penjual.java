@@ -1,5 +1,9 @@
 package user;
 import bahanPangan.BahanPangan;
+
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
@@ -20,7 +24,7 @@ public class Penjual {
     }
 
 
-    public static void menu(){
+    public static void menu(String userId){
         int choose;
         boolean isRun = true;
         while (isRun) {
@@ -29,18 +33,18 @@ public class Penjual {
             choose = inputObj.nextInt();
             switch (choose) {
                 case 1:
-                    BahanPangan.displayData(Admin.getFilePathBahanPangan(),"BAHAN PANGAN");
+                    BahanPangan.displayDataPangan(Admin.getFilePathBahanPangan(),"BAHAN PANGAN");
                     break;
                 case 2:
-                    Penjual.tambahPangan();
+                    Penjual.tambahPangan(userId);
                     break;
                 case 3:
-                    BahanPangan.displayData(Admin.getFilePathDataPO(), "PRE-ORDER");
+                    BahanPangan.displayDataPO(Admin.getFilePathDataPO(),"PRE-ORDER");
                     break;
                 case 4:
                     if (BahanPangan.isHaveData(Admin.getFilePathDataPO())){
-                        BahanPangan.displayData(Admin.getFilePathDataPO(),"PRE-ORDER");
-                        Penjual.layaniPreOrder();
+                        BahanPangan.displayDataPO(Admin.getFilePathDataPO(),"PRE-ORDER");
+                        Penjual.layaniPreOrder(userId);
                     }
                     else
                         System.out.println("TIDAK ADA PRE-ORDER YANG TERSEDIA");
@@ -72,24 +76,24 @@ public class Penjual {
         String password = inputObj.nextLine();
         if (loginValidasi(username, password)) {
             System.out.println("Login berhasil!");
-            menu();
+            menu(username);
         } else {
             System.out.println("Username atau password salah!");
         }
     }
     
-    public static void layaniPreOrder(){
+    public static void layaniPreOrder(String userId){
         inputObj.nextLine();
         System.out.print("Masukkan id yang ingin anda terima : ");
         String id = inputObj.nextLine();
         boolean isFound = BahanPangan.isHaveId(Admin.getFilePathDataPO(),id);
         if(isFound)
-            BahanPangan.removeData(Admin.getFilePathDataPO(),id);
+            BahanPangan.editDataPreOrder(Admin.getFilePathDataPO(),id,userId);
         else
             System.out.println(id + " TIDAK DITEMUKAN");
 
     }
-    public static void tambahPangan(){
+    public static void tambahPangan(String idUser){
         String jenis;
         int choose;
         System.out.print("====== MENU INPUT BAHAN PANGAN ======\n1. Padi\n2. Jagung\n3. Kedelai\nPilih jenis yang anda inginkan : ");
@@ -106,7 +110,7 @@ public class Penjual {
             System.out.print("Masukkan jumlah keseluruhan: ");
             double jumlah = inputObj.nextDouble();
             BahanPangan bahanPangan = new BahanPangan(jenis,harga,jumlah, Penjual.generateID());
-            BahanPangan.appeandToTxt(bahanPangan, Admin.getFilePathBahanPangan());
+            BahanPangan.appeandToTxt(bahanPangan, Admin.getFilePathBahanPangan(),"Penjual",idUser);
         }
         else
             System.out.println("MAAF HARGA YANG DITAWARKAN TIDAK SESUAI");
@@ -120,5 +124,7 @@ public class Penjual {
             return true;
         return false;
     }
+
+
 
 }
