@@ -1,2 +1,4 @@
 21/03/2023
 Jenis       HargaPerKg      JumlahPerKg    IdBahanPangan     IdPembeli
+Padi         10000.0          20.0            2192W            11234    
+Jagung       8100.0           56.0            8980J            11234    

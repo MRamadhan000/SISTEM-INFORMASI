@@ -18,14 +18,30 @@ public class BahanPangan{
         this.id = id;
     }
 
+    public static String center(String text, int width) {
+        if (text.length() >= width) {
+            return text;
+        }
+        int padding = width - text.length();
+        int leftPadding = padding / 2;
+        int rightPadding = padding - leftPadding;
+        return String.format("%" + leftPadding + "s%s%" + rightPadding + "s", "", text, "");
+    }
+
+
     public static void displayData(String filePath, String keterangan){
-        boolean isHave =BahanPangan.isHaveData(filePath);
+        boolean isHave = BahanPangan.isHaveData(filePath);
+        int loop = 0;
         String line;
         if (isHave) {
             try {
                 BufferedReader reader = new BufferedReader(new FileReader(filePath));
+                line = reader.readLine();
+                line = reader.readLine();
+                System.out.printf("=   %-13s=    %-15s=   %-15s=   %-12s=%n", "Jenis", "Harga PerKg", "Jumlah PerKg","Id Pangan");
                 while ((line = reader.readLine()) != null) {
-                    System.out.println(line);
+                    String[] partsData = line.split("\\s+");
+                    System.out.printf("=   %-13s=    %-15s=   %-15s=    %-9s  =%n", partsData[0], partsData[1], partsData[2], partsData[3]);
                 }
                 reader.close();
             } catch (IOException e) {
@@ -121,10 +137,9 @@ public class BahanPangan{
     }
 
     public static void appeandToTxt(BahanPangan bahanPangan, String filePath) {
-            boolean isFound = false;
+        boolean isFound = false;
         //String header = String.format("%-15s%-20s%-20s%-20s%-20s\n","Jenis","HargaPerKg","JumlahPerKg","IdBahanPangan","IdPenjual");
         //String dataString = String.format("%-15s%-20s%-20s%-20s%-15s", bahanPangan.getJenis(), bahanPangan.getHargaSatuan(), bahanPangan.getJumlahBahan(), bahanPangan.getId(), "3627D");
-
         String dataString = String.format("%-13s%-17s%-16s%-17s%-9s", bahanPangan.getJenis(), bahanPangan.getHargaSatuan(),bahanPangan.getJumlahBahan(), bahanPangan.getId(), "11234");
         ArrayList<String> data = new ArrayList<>();
             String line;

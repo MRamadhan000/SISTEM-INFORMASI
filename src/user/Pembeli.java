@@ -59,7 +59,6 @@ public class Pembeli {
                     break;
                 case 4:
                     isRun = false;
-                    inputObj.nextLine();
                     break;
                 default:
                     System.out.println("Masukkan angka yang benar");

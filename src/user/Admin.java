@@ -65,7 +65,6 @@ public class Admin {
                     isFoundRole = false;
                 }
                 data.add(line);
-
             }
             reader.close();
         } catch (IOException e) {
