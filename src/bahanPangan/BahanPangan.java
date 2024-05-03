@@ -122,8 +122,11 @@ public class BahanPangan{
 
     public static void appeandToTxt(BahanPangan bahanPangan, String filePath) {
             boolean isFound = false;
-            String dataString = String.format("%-15s%-20.0f%-15s%-10s", bahanPangan.getJenis(), bahanPangan.getHargaSatuan(), bahanPangan.getJumlahBahan(), bahanPangan.getId());
-            ArrayList<String> data = new ArrayList<>();
+        //String header = String.format("%-15s%-20s%-20s%-20s%-20s\n","Jenis","HargaPerKg","JumlahPerKg","IdBahanPangan","IdPenjual");
+        //String dataString = String.format("%-15s%-20s%-20s%-20s%-15s", bahanPangan.getJenis(), bahanPangan.getHargaSatuan(), bahanPangan.getJumlahBahan(), bahanPangan.getId(), "3627D");
+
+        String dataString = String.format("%-13s%-17s%-16s%-17s%-9s", bahanPangan.getJenis(), bahanPangan.getHargaSatuan(),bahanPangan.getJumlahBahan(), bahanPangan.getId(), "11234");
+        ArrayList<String> data = new ArrayList<>();
             String line;
             try {
                 //Membaca file baris per baris
@@ -159,8 +162,8 @@ public class BahanPangan{
                 String[] partsData = line.split("\\s+");
                 if (partsData[3].equals(id)){
                     double jumlahStok = Double.parseDouble(partsData[2]);
-                    double hargaJual = Double.parseDouble(partsData[1]);
-                    String dataString = String.format("%-15s%-20.0f%-15.0f%-10s", partsData[0], hargaJual, jumlahStok - jumlahBeli, partsData[3]);
+                    double sisaStock = jumlahStok - jumlahBeli;
+                    String dataString = String.format("%-13s%-17s%-16s%-17s%-9s", partsData[0], partsData[1], sisaStock, partsData[3],partsData[4]);
                     arr.add(dataString);
                 } else {
                     arr.add(line);

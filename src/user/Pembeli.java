@@ -78,14 +78,14 @@ public class Pembeli {
         if (isFoundId) {
             double jumlahBeli, uang, arrPangan[] = BahanPangan.getInfoPangan(Admin.getFilePathBahanPangan(), id);
             double hargaJual = arrPangan[0], jumlahAwal = arrPangan[1];
-            System.out.println(" ======= JUMLAH YANG TERSEDIA " + jumlahAwal + " ==========");
+            System.out.println("\n ======= JUMLAH YANG TERSEDIA " + jumlahAwal + " ==========");
             do {
                 System.out.print("Masukkan jumlah yang ingin dibeli : ");
                 jumlahBeli = inputObj.nextDouble();
                 if (jumlahBeli > arrPangan[1])
                     System.out.println("Jumlah anda melebihi");
             } while (jumlahBeli > arrPangan[1]);
-            System.out.println(" ======= HARGA BAHAN YANG DIBELI " + hargaJual * jumlahBeli + " ==========");
+            System.out.println("\n ======= HARGA BAHAN YANG DIBELI " + BahanPangan.formatCurrencyIDR(hargaJual * jumlahBeli) + " ==========");
             do {
                 System.out.print("Masukkan uang anda : ");
                 uang = inputObj.nextDouble();

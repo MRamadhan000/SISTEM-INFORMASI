@@ -1,2 +1,2 @@
 21/03/2023
-Jenis          HargaPerKg          Jumlah         ID
+Jenis       HargaPerKg      JumlahPerKg    IdBahanPangan     IdPembeli
