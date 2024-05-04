@@ -50,7 +50,7 @@ public class Penjual {
                         System.out.println("TIDAK ADA PRE-ORDER YANG TERSEDIA");
                     break;
                 case 5:
-                    BahanPangan.displayDataPangan(Admin.getFilePathHistoryPenjualan(),"BAHAN PANGAN");
+                    BahanPangan.displayHistoryPenjualan(Admin.getFilePathHistoryPenjualan(),"HISTORY");
                     break;
                 case 6:
                     isRun = false;

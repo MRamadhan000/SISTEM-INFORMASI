@@ -254,4 +254,32 @@ public class BahanPangan{
     public double getJumlahBahan() {
         return jumlahBahan;
     }
+
+
+
+    public static void displayHistoryPenjualan(String filePath, String keterangan){
+        boolean isHave = BahanPangan.isHaveData(filePath);
+        String line;
+        if (isHave) {
+            try {
+                BufferedReader reader = new BufferedReader(new FileReader(filePath));
+                line = reader.readLine();
+                line = reader.readLine();
+                System.out.printf("=   %-13s=    %-15s=   %-15s=   %-12s=%n", "Jenis", "Harga PerKg", "Jumlah PerKg","Id Pangan");
+                while ((line = reader.readLine()) != null) {
+                    String[] partsData = line.split("\\s+");
+                    if (partsData[4].equals("0.0"))
+                        continue;
+                    System.out.printf("=   %-13s=    %-15s=   %-15s=    %-9s  =%n", partsData[1], partsData[2], partsData[4], partsData[0]);
+                }
+                reader.close();
+            } catch (IOException e) {
+                System.err.println("Error reading the file: " + e.getMessage());
+            }
+        }
+        else
+            System.out.println("TIDAK ADA " + keterangan + " YANG TERSEDIA");
+    }
 }
+
+
