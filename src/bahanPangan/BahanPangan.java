@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.io.*;
 import java.text.NumberFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
+// import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
@@ -106,7 +106,7 @@ public class BahanPangan{
     }
     public static double[] getInfoPangan(String filePath,String id){
         String line;
-        boolean isFound = true;
+        // boolean isFound = true;
         double[] arr = new double[2];
         try {
             BufferedReader reader = new BufferedReader(new FileReader(filePath));
