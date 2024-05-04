@@ -44,6 +44,7 @@ public class Pembeli {
         }
     }
 
+
     public static void menu(String userId) {
         Admin.clear();
         int choose;
@@ -57,7 +58,7 @@ public class Pembeli {
                     BahanPangan.displayDataPangan(Admin.getFilePathBahanPangan(), "BAHAN PANGAN");
                     break;
                 case 2:
-                    Pembeli.beliBahanPangan();
+                    Pembeli.beliBahanPangan(userId);
                     break;
                 case 3:
                     Pembeli.buatPreOrder(userId);
@@ -75,7 +76,7 @@ public class Pembeli {
         }
     }
 
-    public static void beliBahanPangan() {
+    public static void beliBahanPangan(String userId) {
         inputObj.nextLine();
         String id;
         BahanPangan.displayDataPangan(Admin.getFilePathBahanPangan(), "BAHAN PANGAN");
@@ -83,15 +84,17 @@ public class Pembeli {
         id = inputObj.nextLine();
         boolean isFoundId = BahanPangan.isHaveId(Admin.getFilePathBahanPangan(), id);
         if (isFoundId) {
-            double jumlahBeli, uang, arrPangan[] = BahanPangan.getInfoPangan(Admin.getFilePathBahanPangan(), id);
-            double hargaJual = arrPangan[0], jumlahAwal = arrPangan[1];
+            double jumlahBeli, uang;
+            String arrData = BahanPangan.getInfoPangan(Admin.getFilePathBahanPangan(), id);
+            String[] partsData = arrData.split("\\s+");
+            double hargaJual = Double.parseDouble(partsData[2]), jumlahAwal = Double.parseDouble(partsData[4]);
             System.out.println("\n ======= JUMLAH YANG TERSEDIA " + jumlahAwal + " ==========");
             do {
                 System.out.print("Masukkan jumlah yang ingin dibeli : ");
                 jumlahBeli = inputObj.nextDouble();
-                if (jumlahBeli > arrPangan[1])
+                if (jumlahBeli > jumlahAwal)
                     System.out.println("Jumlah anda melebihi");
-            } while (jumlahBeli > arrPangan[1]);
+            } while (jumlahBeli > jumlahAwal);
             System.out.println("\n ======= HARGA BAHAN YANG DIBELI " + BahanPangan.formatCurrencyIDR(hargaJual * jumlahBeli) + " ==========");
             do {
                 System.out.print("Masukkan uang anda : ");
@@ -102,7 +105,8 @@ public class Pembeli {
                     System.out.println("Uang anda kelebihan");
             } while (uang != (hargaJual * jumlahBeli));
             System.out.println("PEMBELIAN BERHASIL");
-            BahanPangan.editDataPangan(Admin.getFilePathBahanPangan(),Admin.getFilePathHistoryPenjualan(),id,jumlahBeli);
+            BahanPangan.appeandToHistory(arrData,userId,jumlahAwal,jumlahAwal-jumlahBeli);
+            BahanPangan.editDataPangan(Admin.getFilePathBahanPangan(),id,jumlahBeli);
         } else
             System.out.println(id + " TIDAK DITEMUKAN");
     }
@@ -127,27 +131,25 @@ public class Pembeli {
     }
 
     public static void displayNotif(String filePath,String userId){
-        //boolean isFoundId = BahanPangan.isHaveId(filePath,userId);
         boolean isFoundId = false;
         String line;
-            try {
-                BufferedReader reader = new BufferedReader(new FileReader(filePath));
-                line = reader.readLine();
-                line = reader.readLine();
-
-                while ((line = reader.readLine()) != null) {
-                    String[] partsData = line.split("\\s+");
-                    if (partsData[5].equals(userId) &&!partsData[4].equals("BELUM")){
-                        isFoundId = true;
-                        System.out.println("PESANAN ANDA TELAH DENGAN ID " + partsData[0] +" DITERIMA OLEH " + partsData[4]);
-                        System.out.printf("=   %-13s=    %-15s=   %-15s=   %-12s=%n", "Jenis", "Harga PerKg", "Keterangan","Id Pangan");
-                        System.out.printf("=   %-13s=    %-15s=   %-15s=    %-9s  =%n", partsData[1], partsData[2], partsData[4], partsData[0]);
-                    }
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader(filePath));
+            line = reader.readLine();
+            line = reader.readLine();
+            while ((line = reader.readLine()) != null) {
+                String[] partsData = line.split("\\s+");
+                if (partsData[5].equals(userId) &&!partsData[4].equals("BELUM")){
+                    isFoundId = true;
+                    System.out.println("PESANAN ANDA DENGAN ID " + partsData[0] +"  TELAH DITERIMA OLEH " + partsData[4]);
+                    System.out.printf("=   %-13s=    %-15s=   %-15s=   %-15s=   %-11s=%n", "Jenis", "Harga PerKg","Jumlah" ,"Penerima","Id Pangan");
+                    System.out.printf("=   %-13s=    %-15s=   %-15s=   %-15s=   %-9s  =%n", partsData[1], partsData[2],partsData[3],partsData[4], partsData[0]);
                 }
-                reader.close();
-            } catch (IOException e) {
-                System.err.println("Error reading the file: " + e.getMessage());
             }
+            reader.close();
+        } catch (IOException e) {
+            System.err.println("Error reading the file: " + e.getMessage());
+        }
         if(!isFoundId)
             System.out.println("TIDAK ADA NOTIFIKASI");
     }

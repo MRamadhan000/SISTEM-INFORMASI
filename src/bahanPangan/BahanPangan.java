@@ -1,10 +1,10 @@
 package bahanPangan;
+import user.Admin;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.*;
 import java.text.NumberFormat;
 import java.util.ArrayList;
-// import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
@@ -26,12 +26,12 @@ public class BahanPangan{
                 BufferedReader reader = new BufferedReader(new FileReader(filePath));
                 line = reader.readLine();
                 line = reader.readLine();
-                System.out.printf("=   %-13s=    %-15s=   %-15s=   %-12s=%n", "Jenis", "Harga PerKg", "Keterangan","Id Pangan");
+                System.out.printf("=   %-13s=    %-15s=   %-15s=   %-12s=%n", "Jenis", "Harga PerKg", " Jumlah","Id Pangan");
                 while ((line = reader.readLine()) != null) {
                     String[] partsData = line.split("\\s+");
                     if (!partsData[4].equals("BELUM"))
                         continue;
-                    System.out.printf("=   %-13s=    %-15s=   %-15s=    %-9s  =%n", partsData[1], partsData[2], partsData[4], partsData[0]);
+                    System.out.printf("=   %-13s=    %-15s=   %-15s=    %-9s  =%n", partsData[1], partsData[2], partsData[3], partsData[0]);
                 }
                 reader.close();
             } catch (IOException e) {
@@ -40,6 +40,25 @@ public class BahanPangan{
         }
         else
             System.out.println("TIDAK ADA " + keterangan + " YANG TERSEDIA");
+    }
+
+    public static void appeandToHistory(String lines,String idUser, double jumlahAwal,double jumlahAkhir){
+        String[] partsData = lines.split("\\s+");
+        if (jumlahAkhir<1)
+            jumlahAkhir = 0;
+        String filePath = Admin.getFilePathHistoryPenjualan();
+        try {
+            FileWriter fw = new FileWriter(filePath, true);
+            String dataString = String.format("%-13s%-14s%-16s%-16s%-16s%-16s%-9s\n", partsData[0], partsData[1],partsData[2],jumlahAwal,jumlahAkhir,partsData[5],idUser);
+            // Append the text to the file
+            fw.write(dataString);
+            // Close the FileWriter
+            fw.close();
+
+            System.out.println("Text appended successfully.");
+        } catch (IOException e) {
+            System.err.println("Error appending text to the file: " + e.getMessage());
+        }
     }
 
     public static void displayDataPangan(String filePath, String keterangan){
@@ -104,10 +123,9 @@ public class BahanPangan{
         }
         return false;
     }
-    public static double[] getInfoPangan(String filePath,String id){
-        String line;
-        // boolean isFound = true;
-        double[] arr = new double[2];
+
+    public static String getInfoPangan(String filePath,String id){
+        String line, data = "";
         try {
             BufferedReader reader = new BufferedReader(new FileReader(filePath));
             for (int i = 0; i < 2;i++)
@@ -115,17 +133,15 @@ public class BahanPangan{
             while ((line = reader.readLine()) != null) {
                 String[] partsData = line.split("\\s+");
                 if(partsData[0].equals(id)){
-                    arr[0] = Double.parseDouble(partsData[2]);
-                    arr[1] = Double.parseDouble(partsData[4]);
+                    data = line;
                 }
             }
             reader.close();
         } catch (IOException e) {
             System.err.println("Error reading the file: " + e.getMessage());
         }
-        return arr;
+        return data;
     }
-
     public static void appeandToTxt(BahanPangan bahanPangan, String filePath, String role,String idUser) {
         boolean isFound = false;
         String dataString;
@@ -134,28 +150,28 @@ public class BahanPangan{
         else
             dataString = String.format("%-13s%-14s%-16s%-16s%-16s%-9s", bahanPangan.getId(), bahanPangan.getJenis(),bahanPangan.getHargaSatuan(),bahanPangan.getJumlahBahan(),"BELUM",idUser);
         ArrayList<String> data = new ArrayList<>();
-            String line;
-            try {
-                //Membaca file baris per baris
-                BufferedReader reader = new BufferedReader(new FileReader(filePath));
-                // Membaca setiap baris
-                line = reader.readLine();
+        String line;
+        try {
+            //Membaca file baris per baris
+            BufferedReader reader = new BufferedReader(new FileReader(filePath));
+            // Membaca setiap baris
+            line = reader.readLine();
+            data.add(line);
+            while ((line = reader.readLine()) != null) {
                 data.add(line);
-                while ((line = reader.readLine()) != null) {
-                    data.add(line);
-                    String[] partsData = line.split("\\s+");
-                    if(partsData[1].equals(bahanPangan.getJenis())){
-                        data.add(dataString);
-                        isFound = true;
-                    }
-                }
-                if(!isFound)
+                String[] partsData = line.split("\\s+");
+                if(partsData[1].equals(bahanPangan.getJenis()) && !isFound){
                     data.add(dataString);
-                reader.close();
-            } catch (IOException e) {
-                System.err.println("Error reading the file: " + e.getMessage());
+                    isFound = true;
+                }
             }
-            BahanPangan.writeToFile(filePath,data);
+            if(!isFound)
+                data.add(dataString);
+            reader.close();
+        } catch (IOException e) {
+            System.err.println("Error reading the file: " + e.getMessage());
+        }
+        BahanPangan.writeToFile(filePath,data);
     }
 
     public static void editDataPreOrder(String filePath,String id,String userId){
@@ -183,7 +199,7 @@ public class BahanPangan{
         BahanPangan.writeToFile(filePath,arr);
     }
 
-    public static void editDataPangan(String filePath, String filePathHistori,String id, double jumlahBeli) {
+    public static void editDataPangan(String filePath,String id, double jumlahBeli) {
         String line;
         ArrayList<String> arr = new ArrayList<>();
         try {
@@ -195,24 +211,21 @@ public class BahanPangan{
             while ((line = reader.readLine()) != null) {
                 String[] partsData = line.split("\\s+");
                 if (partsData[0].equals(id)){
-                        double jumlahStok = Double.parseDouble(partsData[4]);
-                        double sisaStock = jumlahStok - jumlahBeli;
-                        if (sisaStock < 1)
-                            sisaStock = 0;
-                        String dataString = String.format("%-13s%-14s%-16s%-16s%-16s%-9s", partsData[0], partsData[1], partsData[2], partsData[3], sisaStock, partsData[5]);
-                        arr.add(dataString);
-                        BahanPangan.writeToFile(filePathHistori,arr);
+                    double jumlahStok = Double.parseDouble(partsData[4]);
+                    double sisaStock = jumlahStok - jumlahBeli;
+                    if (sisaStock < 1)
+                        sisaStock = 0;
+                    String dataString = String.format("%-13s%-14s%-16s%-16s%-16s%-9s", partsData[0], partsData[1], partsData[2], partsData[3], sisaStock, partsData[5]);
+                    arr.add(dataString);
                 } else {
                     arr.add(line);
                 }
-
             }
             reader.close();
         } catch (IOException e) {
             System.err.println("Error reading/writing the file: " + e.getMessage());
         }
-    BahanPangan.writeToFile(filePath,arr);
-   
+        BahanPangan.writeToFile(filePath,arr);
     }
 
     public static void writeToFile(String fileName, List<String> lines) {
@@ -256,32 +269,4 @@ public class BahanPangan{
     public double getJumlahBahan() {
         return jumlahBahan;
     }
-
-
-
-    public static void displayHistoryPenjualan(String filePath, String keterangan){
-        boolean isHave = BahanPangan.isHaveData(filePath);
-        String line;
-        if (isHave) {
-            try {
-                BufferedReader reader = new BufferedReader(new FileReader(filePath));
-                line = reader.readLine();
-                line = reader.readLine();
-                System.out.printf("=   %-13s=    %-15s=   %-15s=   %-12s=%n", "Jenis", "Harga PerKg", "Jumlah PerKg","Id Pangan");
-                while ((line = reader.readLine()) != null) {
-                    String[] partsData = line.split("\\s+");
-                    if (partsData[4].equals("0.0"))
-                        continue;
-                    System.out.printf("=   %-13s=    %-15s=   %-15s=    %-9s  =%n", partsData[1], partsData[2], partsData[4], partsData[0]);
-                }
-                reader.close();
-            } catch (IOException e) {
-                System.err.println("Error reading the file: " + e.getMessage());
-            }
-        }
-        else
-            System.out.println("TIDAK ADA " + keterangan + " YANG TERSEDIA");
-    }
 }
-
-
