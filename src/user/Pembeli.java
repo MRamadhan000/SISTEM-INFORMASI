@@ -45,11 +45,12 @@ public class Pembeli {
     }
 
     public static void menu(String userId) {
+        Admin.clear();
         int choose;
         boolean isRun = true;
         while (isRun) {
             System.out.println("===== MENU PEMBELI ======");
-            System.out.print("1. Tampilkan bahan pangan yang tersedia\n2. Beli bahan pangan\n3. Buat pesanan\n4. Tampilkan Notifikasi\n5.. Exit\nMasukan pilihan anda (1-4) : ");
+            System.out.print("1. Tampilkan bahan pangan yang tersedia\n2. Beli bahan pangan\n3. Buat pesanan\n4. Tampilkan Notifikasi\n5. Exit\nMasukan pilihan anda (1-5) : ");
             choose = inputObj.nextInt();
             switch (choose) {
                 case 1:
@@ -65,6 +66,7 @@ public class Pembeli {
                     Pembeli.displayNotif(Admin.getFilePathDataPO(),userId);
                 case 5:
                     isRun = false;
+                    System.out.println("Keluar dari Menu Pembeli");
                     break;
                 default:
                     System.out.println("Masukkan angka yang benar");

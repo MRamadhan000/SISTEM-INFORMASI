@@ -8,21 +8,23 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Random;
 import java.text.SimpleDateFormat;
 import java.util.Scanner;
+import java.util.concurrent.TimeUnit;
 
 public class Admin {
     private final static String filePathBahanPangan = "src/bahanPangan/dataBahanPangan.txt";
     private final static String filePathDataPO = "src/bahanPangan/dataPreOrder.txt";
     private final static String filePathDataUser = "src/bahanPangan/dataUser.txt";
-<<<<<<< HEAD
+// <<<<<<< HEAD
     private final static String[] arrJenisPangan = { "Padi", "Jagung", "Kedelai" };
-    private static double[] arrHargaPangan = { 8000, 7000, 10000 };// SET HARGA
-=======
+    private static double[] arrHargaPangan = {8000,7000,10000};// SET HARGA
+// =======
     private final static String filePathHistoryPenjualan = "src/bahanPangan/historyPenjualan.txt";
-    private final static String[] arrJenisPangan = {"Padi","Jagung","Kedelai"};
-    private static double[] arrHargaPangan = {8000,7000,10000};//SET HARGA
->>>>>>> 733b287d4223fefbc68e62f4aaa26e015abc1976
+    // private final static String[] arrJenisPangan = {"Padi","Jagung","Kedelai"};
+    // private static double[] arrHargaPangan = {8000,7000,10000};//SET HARGA
+// >>>>>>> 733b287d4223fefbc68e62f4aaa26e015abc1976
     private static String date;
     static Scanner inputObj = new Scanner(System.in);
     static String user = "admin";
@@ -124,9 +126,9 @@ public class Admin {
             return false;
     }
 
-<<<<<<< HEAD
-    public static void loginAdmin() {
-=======
+// <<<<<<< HEAD
+    // public static void loginAdmin() { 
+// =======
     public static void removeData(String filePath,String role){
         String line;
         ArrayList<String> data = new ArrayList<>();
@@ -154,7 +156,7 @@ public class Admin {
     }
 
     public static void loginAdmin(){
->>>>>>> 733b287d4223fefbc68e62f4aaa26e015abc1976
+// >>>>>>> 733b287d4223fefbc68e62f4aaa26e015abc1976
         System.out.print("Username: ");
         String username = inputObj.nextLine();
         System.out.print("Password: ");
@@ -168,6 +170,7 @@ public class Admin {
     }
 
     public static void menu() {
+        Admin.clear();
         int choose;
         boolean isRun = true;
         while (isRun) {
@@ -183,6 +186,7 @@ public class Admin {
                     break;
                 case 3:
                     isRun = false;
+                    System.out.println("Keluar dari Menu Admin");
                     inputObj.nextLine();
                     break;
                 default:
@@ -192,12 +196,27 @@ public class Admin {
         }
     }
 
+    // public static void setPasar() {
+    //     double harga;
+    //     for (int i = 0; i < 3; i++) {
+    //         System.out.print("Masukkan harga pasar untuk " + Admin.getJenis(i) + " : ");
+    //         harga = inputObj.nextDouble();
+    //         Admin.setArrHargaJenis(harga, i);
+    //     }
+    //     for (double x : arrHargaPangan) {
+    //         System.out.println("Harga = " + x);
+    //     }
+    // }
+
     public static void setPasar() {
         double harga;
+        double pembulatan;
+        Random rand = new Random();
         for (int i = 0; i < 3; i++) {
-            System.out.print("Masukkan harga pasar untuk " + Admin.getJenis(i) + " : ");
-            harga = inputObj.nextDouble();
-            Admin.setArrHargaJenis(harga, i);
+            // System.out.print("Masukkan harga pasar untuk " + Admin.getJenis(i) + " : ");
+            harga = 5000 + (rand.nextDouble() * 5000);
+            pembulatan = Math.round(harga / 1000) * 1000;
+            Admin.setArrHargaJenis(pembulatan, i);
         }
         for (double x : arrHargaPangan) {
             System.out.println("Harga = " + x);
@@ -227,6 +246,7 @@ public class Admin {
         Admin.arrHargaPangan[index] = hargaJenis;
     }
 
+
     public static String getFilePathBahanPangan() {
         return filePathBahanPangan;
     }
@@ -243,6 +263,15 @@ public class Admin {
         return filePathHistoryPenjualan;
     }
 
-    
+    public static void clear() {
+        try {
+            Thread.sleep(1000); // delay for 5 seconds
+            System.out.print("\033[H\033[2J");
+            System.out.flush();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
 
 }

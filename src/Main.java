@@ -11,6 +11,7 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
+        Admin.clear();
         Scanner inputObj = new Scanner(System.in);
         boolean isRun = true;
         int choose;
@@ -21,12 +22,15 @@ public class Main {
             switch (choose) {
                 case 1:
                     Penjual.loginActionPenjual();
+                    Admin.clear();
                     break;
                 case 2:
                     Pembeli.loginActionPembeli();
+                    Admin.clear();
                     break;
                 case 3:
                     Admin.loginAdmin();
+                    Admin.clear();
                     break;
                 case 4:
                     isRun = false;

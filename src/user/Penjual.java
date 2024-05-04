@@ -27,6 +27,7 @@ public class Penjual {
 
 
     public static void menu(String userId){
+        Admin.clear();
         int choose;
         boolean isRun = true;
         while (isRun) {
@@ -56,6 +57,7 @@ public class Penjual {
                     break;
                 case 6:
                     isRun = false;
+                    System.out.println("Keluar Dari Menu Penjual");
                     break;
                 default:
                     System.out.println("Masukkan angka yang benar");
@@ -82,6 +84,7 @@ public class Penjual {
         String password = inputObj.nextLine();
         if (loginValidasi(username, password)) {
             System.out.println("Login berhasil!");
+         
             menu(username);
         } else {
             System.out.println("Username atau password salah!");
@@ -100,6 +103,7 @@ public class Penjual {
 
     }
     public static void tambahPangan(String idUser){
+
         String jenis;
         int choose;
         System.out.print("====== MENU INPUT BAHAN PANGAN ======\n1. Padi\n2. Jagung\n3. Kedelai\nPilih jenis yang anda inginkan : ");
@@ -109,6 +113,8 @@ public class Penjual {
                 System.out.println("Masukan angka yang benar");
         }while (choose < 1 || choose > 3);
         jenis = Admin.getJenis(choose-1);
+        System.out.println("Harga Minimum " + jenis +":"+ getMinsHarga(choose));
+        System.out.println("Harga Maksimum " + jenis +":"+ getMaksHarga(choose));
         System.out.print("Masukkan harga " + jenis + " /Kg: ");
         double harga = inputObj.nextDouble();
         boolean isValid = cekHargaPasar(choose,harga);
@@ -130,6 +136,18 @@ public class Penjual {
         if(harga >= hargaMin && harga <= hargaMaks)
             return true;
         return false;
+    }
+
+    public static double  getMaksHarga(int choose){
+        double hargaPasar = Admin.getHargaJenis(choose-1),hargaMaks;
+        hargaMaks = 1.2 * hargaPasar;
+        return hargaMaks;
+    }
+
+    public static double  getMinsHarga(int choose){
+        double hargaPasar = Admin.getHargaJenis(choose-1),hargaMin;
+        hargaMin = 0.8 * hargaPasar;
+        return hargaMin;
     }
 
 

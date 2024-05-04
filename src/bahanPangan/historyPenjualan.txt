@@ -2,3 +2,10 @@
 IdBahan      Jenis        HargaPerKg    JumlahAwal      JumlahAkhir      IdPenjual
 9699I        Jagung        7000.0          200.0           190.0           dika     
 9100O        Padi          8000.0          28.0            28.0            dika     
+7203N        Padi          6500.0          100.0           100.0           dika     
+6076W        Padi          8400.0          2000.0          2000.0          dika     
+7203N        Padi          6500.0          100.0           100.0           dika     
+7580X        Padi          300.0           3000.0          3000.0          dika     
+7203N        Padi          6500.0          100.0           100.0           dika     
+6076W        Padi          8400.0          2000.0          2000.0          dika     
+7203N        Padi          6500.0          100.0           100.0           dika     
