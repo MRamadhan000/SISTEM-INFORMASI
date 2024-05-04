@@ -13,6 +13,8 @@ public class Penjual {
     static {
         usernames.add("user1");
         passwords.add("pass123");
+        usernames.add("dika");
+        passwords.add("1");
     }
     private static Scanner inputObj = new Scanner(System.in);
     public static String generateID() {
@@ -61,6 +63,7 @@ public class Penjual {
             }
         }
     }
+
 
     public static boolean loginValidasi(String username, String password) {
         int index = usernames.indexOf(username);
@@ -114,6 +117,7 @@ public class Penjual {
             double jumlah = inputObj.nextDouble();
             BahanPangan bahanPangan = new BahanPangan(jenis,harga,jumlah, Penjual.generateID());
             BahanPangan.appeandToTxt(bahanPangan, Admin.getFilePathBahanPangan(),"Penjual",idUser);
+            BahanPangan.appeandToTxt(bahanPangan, Admin.getFilePathHistoryPenjualan(), "Penjual", idUser);
         }
         else
             System.out.println("MAAF HARGA YANG DITAWARKAN TIDAK SESUAI");

@@ -100,7 +100,7 @@ public class Pembeli {
                     System.out.println("Uang anda kelebihan");
             } while (uang != (hargaJual * jumlahBeli));
             System.out.println("PEMBELIAN BERHASIL");
-            BahanPangan.editDataPangan(Admin.getFilePathBahanPangan(),id,jumlahBeli);
+            BahanPangan.editDataPangan(Admin.getFilePathBahanPangan(),Admin.getFilePathHistoryPenjualan(),id,jumlahBeli);
         } else
             System.out.println(id + " TIDAK DITEMUKAN");
     }

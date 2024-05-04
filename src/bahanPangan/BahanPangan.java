@@ -183,7 +183,7 @@ public class BahanPangan{
         BahanPangan.writeToFile(filePath,arr);
     }
 
-    public static void editDataPangan(String filePath,String id, double jumlahBeli) {
+    public static void editDataPangan(String filePath, String filePathHistori,String id, double jumlahBeli) {
         String line;
         ArrayList<String> arr = new ArrayList<>();
         try {
@@ -201,6 +201,7 @@ public class BahanPangan{
                             sisaStock = 0;
                         String dataString = String.format("%-13s%-14s%-16s%-16s%-16s%-9s", partsData[0], partsData[1], partsData[2], partsData[3], sisaStock, partsData[5]);
                         arr.add(dataString);
+                        BahanPangan.writeToFile(filePathHistori,arr);
                 } else {
                     arr.add(line);
                 }
@@ -211,6 +212,7 @@ public class BahanPangan{
             System.err.println("Error reading/writing the file: " + e.getMessage());
         }
     BahanPangan.writeToFile(filePath,arr);
+   
     }
 
     public static void writeToFile(String fileName, List<String> lines) {
