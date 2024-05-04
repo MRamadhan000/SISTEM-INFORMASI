@@ -13,7 +13,7 @@ public class Main {
     public static void main(String[] args) {
         Scanner inputObj = new Scanner(System.in);
         boolean isRun = true;
-        int choose;
+        int choose = 0;
         while (isRun) {
             System.out.println("===== MENU =======");
             System.out.print("1. Login sebagai penjual\n2. Login sebagai pembeli\n3. Login sebagai admin\n4. Exit\nMasukkan pilihan anda (1-4): ");
@@ -36,12 +36,5 @@ public class Main {
                     break;
             }
         }
-
     }
-
-
-
-
-
-
 }

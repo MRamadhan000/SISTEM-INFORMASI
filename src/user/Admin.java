@@ -15,14 +15,9 @@ public class Admin {
     private final static String filePathBahanPangan = "src/bahanPangan/dataBahanPangan.txt";
     private final static String filePathDataPO = "src/bahanPangan/dataPreOrder.txt";
     private final static String filePathDataUser = "src/bahanPangan/dataUser.txt";
-<<<<<<< HEAD
-    private final static String[] arrJenisPangan = { "Padi", "Jagung", "Kedelai" };
-    private static double[] arrHargaPangan = { 8000, 7000, 10000 };// SET HARGA
-=======
     private final static String filePathHistoryPenjualan = "src/bahanPangan/historyPenjualan.txt";
     private final static String[] arrJenisPangan = {"Padi","Jagung","Kedelai"};
     private static double[] arrHargaPangan = {8000,7000,10000};//SET HARGA
->>>>>>> 733b287d4223fefbc68e62f4aaa26e015abc1976
     private static String date;
     static Scanner inputObj = new Scanner(System.in);
     static String user = "admin";
@@ -34,34 +29,48 @@ public class Admin {
     public static void addUser() {
         Scanner input = new Scanner(System.in);
         String role;
-        System.out.println("Pilih user yang akan ditambahkan \n 1. Pembeli \n 2. Penjual \n masukkan pilihan anda 1-2 :");
-        int choice = input.nextInt();
-        switch (choice) {
-            case 1:
-                role = "Pembeli";
-                break;
-            case 2:
-                role = "Penjual";
-                break;
-            default:
-                System.err.println("masukkan pilihan 1 atau 2 ");
-                input.close();
-                return;
-        }
-        String id = Penjual.generateID();
-        System.out.print("id user anda "+ id);
-        System.out.print("Masukkan password user : ");
-        String password = input.nextLine();
-        if (isUser(filePathDataUser, id, password, role)) {
-            // Jika user tidak ditemukan, tambahkan user
-            addUserAction(id, password, role);
-            System.out.println("Data " + role + " berhasil ditambahkan!!!");
-        } else {
-            // Jika user ditemukan, lakukan sesuatu di sini
-            System.out.println("Data yang anda tambahkan sudah ada tolong ");
-        }
+        String id;
+        String password;
+    
+        do {
+            System.out.println("Pilih user yang akan ditambahkan:");
+            System.out.println("1. Pembeli");
+            System.out.println("2. Penjual");
+            System.out.print("Masukkan pilihan anda (1-2): ");
+            int choice = input.nextInt();
+    
+            switch (choice) {
+                case 1:
+                    role = "Pembeli";
+                    break;
+                case 2:
+                    role = "Penjual";
+                    break;
+                default:
+                    System.err.println("Masukkan pilihan 1 atau 2");
+                    continue; 
+            }
+    
+            id = Penjual.generateID();
+            System.out.println("ID user baru anda adalah: " + id);
+            
+            input.nextLine(); 
+            
+            System.out.print("Masukkan password user: ");
+            password = input.nextLine();
+    
+            if (!isUser(filePathDataUser, id, password, role)) {
+                addUserAction(id, password, role);
+                System.out.println("Data " + role + " berhasil ditambahkan!!!");
+                break; 
+            } else {
+                System.out.println("Data yang Anda tambahkan sudah ada. Silakan coba lagi.");
+            }
+        } while (true);
+    
         input.close();
     }
+    
     
 
     public static Boolean isUser(String filePath, String id, String password, String role) { // role = "Penjual"
@@ -124,9 +133,6 @@ public class Admin {
             return false;
     }
 
-<<<<<<< HEAD
-    public static void loginAdmin() {
-=======
     public static void removeData(String filePath,String role){
         String line;
         ArrayList<String> data = new ArrayList<>();
@@ -154,7 +160,6 @@ public class Admin {
     }
 
     public static void loginAdmin(){
->>>>>>> 733b287d4223fefbc68e62f4aaa26e015abc1976
         System.out.print("Username: ");
         String username = inputObj.nextLine();
         System.out.print("Password: ");

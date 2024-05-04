@@ -5,43 +5,26 @@ import bahanPangan.BahanPangan;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Pembeli {
     private static Scanner inputObj = new Scanner(System.in);
-    private static ArrayList<String> usernames = new ArrayList<>();
-    private static ArrayList<String> passwords = new ArrayList<>();
-    static {
-        usernames.add("pembeli1");
-        passwords.add("pass1");
-        usernames.add("pembeli2");
-        passwords.add("pass2");
-        usernames.add("pembeli3");
-        passwords.add("pass3");
-    }
-
-    public static boolean loginValidasi(String username, String password) {
-        int index = usernames.indexOf(username);
-        if (index != -1) {
-            if (passwords.get(index).equals(password)) {
-                return true; 
-            }
-        }
-        return false;
-    }
 
     public static void loginActionPembeli() {
-        System.out.print("Masukkan username anda: ");
-        String username = inputObj.nextLine();
+        Scanner input = new Scanner(System.in);
+        System.out.print("Masukkan id anda: ");
+        String idUser = input.nextLine();
         System.out.print("Masukkan password anda: ");
-        String password = inputObj.nextLine();
-        if (loginValidasi(username, password)) {
+        String password = input.nextLine();
+        if (Admin.isUser(Admin.getFilePathDataUser(), idUser,password,"Pembeli")) {
             System.out.println("Login berhasil!");
-            menu(username);
+            menu(idUser);
         } else {
             System.out.println("Username atau password salah!");
+            input.close();
+            return;
         }
+        input.close();
     }
 
     public static void menu(String userId) {

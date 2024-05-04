@@ -4,18 +4,10 @@ import bahanPangan.BahanPangan;
 // import java.io.BufferedReader;
 // import java.io.FileReader;
 // import java.io.IOException;
-import java.util.ArrayList;
+// import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
 public class Penjual {
-    private static ArrayList<String> usernames = new ArrayList<>();
-    private static ArrayList<String> passwords = new ArrayList<>();
-    static {
-        usernames.add("user1");
-        passwords.add("pass123");
-        usernames.add("dika");
-        passwords.add("1");
-    }
     private static Scanner inputObj = new Scanner(System.in);
     public static String generateID() {
         Random random = new Random();
@@ -65,27 +57,29 @@ public class Penjual {
     }
 
 
-    public static boolean loginValidasi(String username, String password) {
-        int index = usernames.indexOf(username);
-        if (index != -1) {
-            if (passwords.get(index).equals(password)) {
-                return true; 
-            }
-        }
-        return false;
-    }
+    // public static boolean loginValidasi(String username, String password) {
+    //     int index = usernames.indexOf(username);
+    //     if (index != -1) {
+    //         if (passwords.get(index).equals(password)) {
+    //             return true; 
+    //         }
+    //     }
+    //     return false;
+    // }
 
     public static void loginActionPenjual() {
-        System.out.print("Masukkan username anda: ");
-        String username = inputObj.nextLine();
+        Scanner input = new Scanner(System.in);
+        System.out.print("Masukkan id anda: ");
+        String idUser = input.nextLine();
         System.out.print("Masukkan password anda: ");
-        String password = inputObj.nextLine();
-        if (loginValidasi(username, password)) {
+        String password = input.nextLine();
+        if (Admin.isUser(Admin.getFilePathDataUser(), idUser,password,"Penjual")) {
             System.out.println("Login berhasil!");
-            menu(username);
+            menu(idUser);
         } else {
             System.out.println("Username atau password salah!");
         }
+        input.close();
     }
     
     public static void layaniPreOrder(String userId){
