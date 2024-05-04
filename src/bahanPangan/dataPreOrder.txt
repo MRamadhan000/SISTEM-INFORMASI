@@ -1,2 +1,3 @@
 21/03/2023
-Jenis       HargaPerKg      JumlahPerKg    IdBahanPangan     IdPembeli
+IdBahan       Jenis      HargaPerKg       JumlahPerKg    Keterangan      IdPembeli
+6182E        Kedelai       8000.0          12.0            BELUM           111YY

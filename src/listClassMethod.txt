@@ -1,3 +1,14 @@
-Admin
-setDate
-setPasar :
+21/03/2023
+IdBahan       Jenis      HargaPerKg       JumlahPerKg    Keterangan      IdPembeli
+8132W        Kedelai       8000.0          67.0            67.0            000XX
+6010V        Kedelai       8100.0          88.0            8.0             000XX
+2179F        Padi          8200.0          10.0            0.0             000XX
+5605N        Padi          8400.0          33.0            33.0            000XX
+1787K        Jagung        8250.0          20.0            20.0            000XX
+6028G        Jagung        8300.0          90.0            90.0            000XX
+
+2943I        Padi          10000.0         120.0           000XX           111YY
+3629J        Padi          7000.0          123.0           123YY           111YY
+1626L        Kedelai       8100.0          70.0            000XX           222YY
+6182E        Kedelai       8000.0          12.0            BELUM           111YY
+

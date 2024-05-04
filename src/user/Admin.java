@@ -15,8 +15,14 @@ public class Admin {
     private final static String filePathBahanPangan = "src/bahanPangan/dataBahanPangan.txt";
     private final static String filePathDataPO = "src/bahanPangan/dataPreOrder.txt";
     private final static String filePathDataUser = "src/bahanPangan/dataUser.txt";
+<<<<<<< HEAD
     private final static String[] arrJenisPangan = { "Padi", "Jagung", "Kedelai" };
     private static double[] arrHargaPangan = { 8000, 7000, 10000 };// SET HARGA
+=======
+    private final static String filePathHistoryPenjualan = "src/bahanPangan/historyPenjualan.txt";
+    private final static String[] arrJenisPangan = {"Padi","Jagung","Kedelai"};
+    private static double[] arrHargaPangan = {8000,7000,10000};//SET HARGA
+>>>>>>> 733b287d4223fefbc68e62f4aaa26e015abc1976
     private static String date;
     static Scanner inputObj = new Scanner(System.in);
     static String user = "admin";
@@ -101,7 +107,6 @@ public class Admin {
                     isFoundRole = false;
                 }
                 data.add(line);
-
             }
             reader.close();
         } catch (IOException e) {
@@ -119,7 +124,37 @@ public class Admin {
             return false;
     }
 
+<<<<<<< HEAD
     public static void loginAdmin() {
+=======
+    public static void removeData(String filePath,String role){
+        String line;
+        ArrayList<String> data = new ArrayList<>();
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader(filePath));
+            for (int i = 0; i < 2;i++) {
+                line = reader.readLine();
+                data.add(line);
+            }
+            while ((line = reader.readLine()) != null) {
+                String[] partsData = line.split("\\s+");
+                if(role.equals("Penjual")){
+                    if(partsData[4].equals("0.0"))
+                        continue;
+                }else
+                    if(!partsData[4].equals("BELUM"))
+                        continue;
+                    data.add(line);
+            }
+            reader.close();
+        } catch (IOException e) {
+            System.err.println("Error reading the file: " + e.getMessage());
+        }
+        BahanPangan.writeToFile(filePath,data);
+    }
+
+    public static void loginAdmin(){
+>>>>>>> 733b287d4223fefbc68e62f4aaa26e015abc1976
         System.out.print("Username: ");
         String username = inputObj.nextLine();
         System.out.print("Password: ");
@@ -203,5 +238,11 @@ public class Admin {
     public static String getFilePathDataUser() {
         return filePathDataUser;
     }
+
+    public static String getFilePathHistoryPenjualan(){
+        return filePathHistoryPenjualan;
+    }
+
+    
 
 }
