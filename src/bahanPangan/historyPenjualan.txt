@@ -1,4 +1,4 @@
-21/03/2023
-IdBahan      Jenis        HargaPerKg    JumlahAwal      JumlahAkhir      IdPenjual
-9699I        Jagung        7000.0          200.0           190.0           dika     
-9100O        Padi          8000.0          28.0            28.0            dika     
+IdBahan     Jenis        HargaPerKg    JumlahAwal      JumlahAkhir      IdPenjual      IdPembeli
+1152R        Padi          8000.0          12.0            10.0            1001A           2002A    
+1152R        Padi          8000.0          10.0            8.0             1001A           2002A    
+4116B        Padi          9000.0          14.0            2.0             1001A           2002A    

@@ -1,8 +1,7 @@
 21/03/2023
 IdBahan      Jenis        HargaPerKg    JumlahAwal      JumlahAkhir      IdPenjual
-8132W        Kedelai       8000.0          67.0            67.0            000XX
-6010V        Kedelai       8100.0          88.0            8.0             000XX
-5605N        Padi          8400.0          33.0            33.0            000XX
-9100O        Padi          8000.0          28.0            20.0            dika     
-1787K        Jagung        8250.0          20.0            20.0            000XX
-9699I        Jagung        7000.0          200.0           190.0           dika     
+1152R        Padi          8000.0          12.0            8.0             1001A    
+4116B        Padi          9000.0          14.0            2.0             1001A    
+7931O        Padi          8500.0          13.0            13.0            1001A    
+2693K        Kedelai       9000.0          14.0            14.0            1001A    
+2417R        Jagung        8000.0          15.0            15.0            1001A    

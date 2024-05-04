@@ -1,3 +1,4 @@
 21/03/2023
 IdBahan       Jenis      HargaPerKg       JumlahPerKg    Keterangan      IdPembeli
-6182E        Kedelai       8000.0          12.0            BELUM           111YY
+9410X        Padi          12000.0         14.0            1001A           2002A    
+4659Q        Kedelai       8000.0          12.0            BELUM           2002A    

@@ -1,16 +1,11 @@
-// import bahanPangan.BahanPangan;
 import user.Admin;
 import user.Penjual;
 import user.Pembeli;
-
-// import java.io.BufferedReader;
-// import java.io.FileReader;
-// import java.io.IOException;
-// import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
+        Admin.clear();
         Scanner inputObj = new Scanner(System.in);
         boolean isRun = true;
         int choose = 0;
@@ -21,12 +16,15 @@ public class Main {
             switch (choose) {
                 case 1:
                     Penjual.loginActionPenjual();
+                    Admin.clear();
                     break;
                 case 2:
                     Pembeli.loginActionPembeli();
+                    Admin.clear();
                     break;
                 case 3:
                     Admin.loginAdmin();
+                    Admin.clear();
                     break;
                 case 4:
                     isRun = false;

@@ -1,9 +1,8 @@
 package user;
 import bahanPangan.BahanPangan;
-
-// import java.io.BufferedReader;
-// import java.io.FileReader;
-// import java.io.IOException;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 // import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
@@ -17,8 +16,8 @@ public class Penjual {
         return String.format("%02d%02d%c", number1, number2, letter);
     }
 
-
     public static void menu(String userId){
+        Admin.clear();
         int choose;
         boolean isRun = true;
         while (isRun) {
@@ -44,16 +43,41 @@ public class Penjual {
                         System.out.println("TIDAK ADA PRE-ORDER YANG TERSEDIA");
                     break;
                 case 5:
-                    BahanPangan.displayHistoryPenjualan(Admin.getFilePathHistoryPenjualan(),"HISTORY");
+                    Penjual.displayHistory(userId);
                     break;
                 case 6:
                     isRun = false;
+                    System.out.println("Keluar dari Menu Penjual");
+                    Admin.clear();
                     break;
                 default:
                     System.out.println("Masukkan angka yang benar");
                     break;
             }
         }
+    }
+
+    public static void displayHistory(String userId){
+        boolean isFound = false;
+        String line,filePath = Admin.getFilePathHistoryPenjualan();
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader(filePath));
+            line = reader.readLine();
+            while ((line = reader.readLine()) != null) {
+                String[] partsData = line.split("\\s+");
+                if (partsData[5].equals(userId)){
+                    isFound = true;
+                    System.out.println("BAHAN PANGAN ANDA DENGAN ID " + partsData[0] +" TELAH DIBELI OLEH " + partsData[6]);
+                    System.out.printf("=   %-13s=    %-15s=   %-15s=   %-25s=   %-15s=   %-11s=%n", "Jenis", "Harga PerKg","Jumlah Awal" ,"Jumlah Setelah Dibeli","Id Pembeli","Id Pangan");
+                    System.out.printf("=   %-13s=    %-15s=   %-15s=   %-25s=   %-15s=   %-9s  =%n", partsData[1], partsData[2],partsData[3],partsData[4], partsData[6],partsData[0]);
+                }
+            }
+            reader.close();
+        } catch (IOException e) {
+            System.err.println("Error reading/writing the file: " + e.getMessage());
+        }
+        if(!isFound)
+            System.out.println("ANDA " + userId +" BELUM ADA MENDAFTARKAN BAHAN PANGAN ANDA");
     }
 
 
@@ -81,19 +105,20 @@ public class Penjual {
         }
         input.close();
     }
-    
+
     public static void layaniPreOrder(String userId){
         inputObj.nextLine();
         System.out.print("Masukkan id yang ingin anda terima : ");
-        String id = inputObj.nextLine();
-        boolean isFound = BahanPangan.isHaveId(Admin.getFilePathDataPO(),id);
+        String idBahanPangan = inputObj.nextLine();
+        boolean isFound = BahanPangan.isHaveId(Admin.getFilePathDataPO(),idBahanPangan);
         if(isFound)
-            BahanPangan.editDataPreOrder(Admin.getFilePathDataPO(),id,userId);
+            BahanPangan.editDataPreOrder(Admin.getFilePathDataPO(),idBahanPangan,userId);
         else
-            System.out.println(id + " TIDAK DITEMUKAN");
+            System.out.println(idBahanPangan + " TIDAK DITEMUKAN");
 
     }
-    public static void tambahPangan(String idUser){
+
+    public static void tambahPangan(String userId){
         String jenis;
         int choose;
         System.out.print("====== MENU INPUT BAHAN PANGAN ======\n1. Padi\n2. Jagung\n3. Kedelai\nPilih jenis yang anda inginkan : ");
@@ -103,6 +128,8 @@ public class Penjual {
                 System.out.println("Masukan angka yang benar");
         }while (choose < 1 || choose > 3);
         jenis = Admin.getJenis(choose-1);
+        System.out.println("Harga Minimum " + jenis +" : "+ BahanPangan.formatCurrencyIDR(getMinsHarga(choose)));
+        System.out.println("Harga Maksimum " + jenis +" : "+ BahanPangan.formatCurrencyIDR(getMaksHarga(choose)));
         System.out.print("Masukkan harga " + jenis + " /Kg: ");
         double harga = inputObj.nextDouble();
         boolean isValid = cekHargaPasar(choose,harga);
@@ -110,8 +137,7 @@ public class Penjual {
             System.out.print("Masukkan jumlah keseluruhan: ");
             double jumlah = inputObj.nextDouble();
             BahanPangan bahanPangan = new BahanPangan(jenis,harga,jumlah, Penjual.generateID());
-            BahanPangan.appeandToTxt(bahanPangan, Admin.getFilePathBahanPangan(),"Penjual",idUser);
-            BahanPangan.appeandToTxt(bahanPangan, Admin.getFilePathHistoryPenjualan(), "Penjual", idUser);
+            BahanPangan.appeandToTxt(bahanPangan, Admin.getFilePathBahanPangan(),"Penjual",userId);
         }
         else
             System.out.println("MAAF HARGA YANG DITAWARKAN TIDAK SESUAI");
@@ -124,6 +150,18 @@ public class Penjual {
         if(harga >= hargaMin && harga <= hargaMaks)
             return true;
         return false;
+    }
+
+    public static double  getMaksHarga(int choose){
+        double hargaPasar = Admin.getHargaJenis(choose-1),hargaMaks;
+        hargaMaks = 1.2 * hargaPasar;
+        return hargaMaks;
+    }
+
+    public static double  getMinsHarga(int choose){
+        double hargaPasar = Admin.getHargaJenis(choose-1),hargaMin;
+        hargaMin = 0.8 * hargaPasar;
+        return hargaMin;
     }
 
 

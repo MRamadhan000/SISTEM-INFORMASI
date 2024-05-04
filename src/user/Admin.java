@@ -8,24 +8,22 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Random;
 import java.text.SimpleDateFormat;
 import java.util.Scanner;
+import java.util.concurrent.TimeUnit;
 
 public class Admin {
     private final static String filePathBahanPangan = "src/bahanPangan/dataBahanPangan.txt";
     private final static String filePathDataPO = "src/bahanPangan/dataPreOrder.txt";
     private final static String filePathDataUser = "src/bahanPangan/dataUser.txt";
+    private final static String[] arrJenisPangan = { "Padi", "Jagung", "Kedelai" };
+    private static double[] arrHargaPangan = {8000,7000,10000};// SET HARGA
     private final static String filePathHistoryPenjualan = "src/bahanPangan/historyPenjualan.txt";
-    private final static String[] arrJenisPangan = {"Padi","Jagung","Kedelai"};
-    private static double[] arrHargaPangan = {8000,7000,10000};//SET HARGA
     private static String date;
     static Scanner inputObj = new Scanner(System.in);
     static String user = "admin";
     static String pass = "admin123";
-
-    // CONTOH PENERAPANNYA
-    // boolean isValid = isUser(Admin.getFilePathDataUser(),
-    // usename,password,"Pembeli");
     public static void addUser() {
         Scanner input = new Scanner(System.in);
         String role;
@@ -172,12 +170,22 @@ public class Admin {
         }
     }
 
+    public static void cleanData(){
+        System.out.print("1. Bersihkan data bahan pangan\n2. Bersihlan data pre-order\nMasukan pilihan anda : ");
+        int choose = inputObj.nextInt();
+        if (choose == 1)
+            removeData(Admin.getFilePathBahanPangan(),"Penjual");
+        else
+            removeData(Admin.getFilePathDataPO(),"Pembeli");
+    }
+
     public static void menu() {
+        Admin.clear();
         int choose;
         boolean isRun = true;
         while (isRun) {
             System.out.println("===== MENU ADMIN ======");
-            System.out.print("1. Set harga pasar\n2. Tambah user\n3. Exit\nMasukan pilihan anda (1-4) : ");
+            System.out.print("1. Set harga pasar\n2. Tambah user\n3. Bersihkan data\n4. Exit\nMasukan pilihan anda (1-4) : ");
             choose = inputObj.nextInt();
             switch (choose) {
                 case 1:
@@ -187,7 +195,12 @@ public class Admin {
                     addUser();
                     break;
                 case 3:
+                    cleanData();
+                    break;
+                case 4:
                     isRun = false;
+                    System.out.println("Keluar dari Menu Admin");
+                    
                     inputObj.nextLine();
                     break;
                 default:
@@ -199,10 +212,13 @@ public class Admin {
 
     public static void setPasar() {
         double harga;
+        double pembulatan;
+        Random rand = new Random();
         for (int i = 0; i < 3; i++) {
-            System.out.print("Masukkan harga pasar untuk " + Admin.getJenis(i) + " : ");
-            harga = inputObj.nextDouble();
-            Admin.setArrHargaJenis(harga, i);
+            // System.out.print("Masukkan harga pasar untuk " + Admin.getJenis(i) + " : ");
+            harga = 5000 + (rand.nextDouble() * 5000);
+            pembulatan = Math.round(harga / 1000) * 1000;
+            Admin.setArrHargaJenis(pembulatan, i);
         }
         for (double x : arrHargaPangan) {
             System.out.println("Harga = " + x);
@@ -232,6 +248,7 @@ public class Admin {
         Admin.arrHargaPangan[index] = hargaJenis;
     }
 
+
     public static String getFilePathBahanPangan() {
         return filePathBahanPangan;
     }
@@ -248,6 +265,15 @@ public class Admin {
         return filePathHistoryPenjualan;
     }
 
-    
+    public static void clear() {
+        try {
+            Thread.sleep(1000); // delay for 5 seconds
+            System.out.print("\033[H\033[2J");
+            System.out.flush();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
 
 }
