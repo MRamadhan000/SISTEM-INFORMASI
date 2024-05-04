@@ -25,11 +25,12 @@ public class Penjual {
     }
 
     public static void menu(String userId){
+        Admin.clear();
         int choose;
         boolean isRun = true;
         while (isRun) {
             System.out.println("\n====== MENU PENJUAL =======");
-            System.out.print("1. Tampilkan bahan pangan di Pasar\n2. Tambahkan bahan pangan\n3. Tampilkan Pre-Order yang tersedia\n4. Layani Pre-Order\n5. History Penjualan\n6. Keluar\nMasukan pilihan anda (1-5): ");
+            System.out.print("1. Tampilkan bahan pangan di Pasar\n2. Tambahkan bahan pangan\n3. Tampilkan Pre-Order yang tersedia\n4. Layani Pre-Order\n5. History Penjualan\n6. Keluar\nMasukan pilihan anda (1-6): ");
             choose = inputObj.nextInt();
             switch (choose) {
                 case 1:
@@ -54,6 +55,8 @@ public class Penjual {
                     break;
                 case 6:
                     isRun = false;
+                    System.out.println("Keluar dari Menu Penjual");
+                    Admin.clear();
                     break;
                 default:
                     System.out.println("Masukkan angka yang benar");

@@ -186,6 +186,7 @@ public class Admin {
                 case 4:
                     isRun = false;
                     System.out.println("Keluar dari Menu Admin");
+                    
                     inputObj.nextLine();
                     break;
                 default:
