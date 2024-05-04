@@ -42,12 +42,18 @@ public class Admin {
                 input.close();
                 return;
         }
-        System.out.print("Masukkan id user : ");
-        String id = input.nextLine();
-        // inputObj.nextLine();
+        String id = Penjual.generateID();
+        System.out.print("id user anda "+ id);
         System.out.print("Masukkan password user : ");
         String password = input.nextLine();
-        addUserAction(id, password, role);
+        if (isUser(filePathDataUser, id, password, role)) {
+            // Jika user tidak ditemukan, tambahkan user
+            addUserAction(id, password, role);
+            System.out.println("Data " + role + " berhasil ditambahkan!!!");
+        } else {
+            // Jika user ditemukan, lakukan sesuatu di sini
+            System.out.println("Data yang anda tambahkan sudah ada tolong ");
+        }
         input.close();
     }
     
