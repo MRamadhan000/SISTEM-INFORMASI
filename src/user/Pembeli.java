@@ -65,6 +65,7 @@ public class Pembeli {
                     break;
                 case 4:
                     Pembeli.displayNotif(Admin.getFilePathDataPO(),userId);
+                    break;
                 case 5:
                     isRun = false;
                     System.out.println("Keluar dari Menu Pembeli");

@@ -15,18 +15,16 @@ public class Main {
             choose = inputObj.nextInt();
             switch (choose) {
                 case 1:
-                    Penjual.menu("1001A");
-                    //Penjual.loginActionPenjual();
-                    //Admin.clear();
+                    Penjual.loginActionPenjual();
+                    Admin.clear();
                     break;
                 case 2:
-                    Pembeli.menu("2002A");
-                    //Pembeli.loginActionPembeli();
-                    //Admin.clear();
+                    Pembeli.loginActionPembeli();
+                    Admin.clear();
                     break;
                 case 3:
-                    //Admin.loginAdmin();
-                    //Admin.clear();
+                    Admin.loginAdmin();
+                    Admin.clear();
                     break;
                 case 4:
                     isRun = false;

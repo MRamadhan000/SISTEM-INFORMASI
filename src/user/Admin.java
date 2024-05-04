@@ -17,22 +17,13 @@ public class Admin {
     private final static String filePathBahanPangan = "src/bahanPangan/dataBahanPangan.txt";
     private final static String filePathDataPO = "src/bahanPangan/dataPreOrder.txt";
     private final static String filePathDataUser = "src/bahanPangan/dataUser.txt";
-// <<<<<<< HEAD
     private final static String[] arrJenisPangan = { "Padi", "Jagung", "Kedelai" };
     private static double[] arrHargaPangan = {8000,7000,10000};// SET HARGA
-// =======
     private final static String filePathHistoryPenjualan = "src/bahanPangan/historyPenjualan.txt";
-    // private final static String[] arrJenisPangan = {"Padi","Jagung","Kedelai"};
-    // private static double[] arrHargaPangan = {8000,7000,10000};//SET HARGA
-// >>>>>>> 733b287d4223fefbc68e62f4aaa26e015abc1976
     private static String date;
     static Scanner inputObj = new Scanner(System.in);
     static String user = "admin";
     static String pass = "admin123";
-
-    // CONTOH PENERAPANNYA
-    // boolean isValid = isUser(Admin.getFilePathDataUser(),
-    // usename,password,"Pembeli");
     public static void addUser() {
         Scanner input = new Scanner(System.in);
         String role;
@@ -126,9 +117,6 @@ public class Admin {
             return false;
     }
 
-// <<<<<<< HEAD
-    // public static void loginAdmin() { 
-// =======
     public static void removeData(String filePath,String role){
         String line;
         ArrayList<String> data = new ArrayList<>();
@@ -156,7 +144,6 @@ public class Admin {
     }
 
     public static void loginAdmin(){
-// >>>>>>> 733b287d4223fefbc68e62f4aaa26e015abc1976
         System.out.print("Username: ");
         String username = inputObj.nextLine();
         System.out.print("Password: ");
@@ -169,13 +156,22 @@ public class Admin {
         }
     }
 
+    public static void cleanData(){
+        System.out.print("1. Bersihkan data bahan pangan\n2. Bersihlan data pre-order\nMasukan pilihan anda : ");
+        int choose = inputObj.nextInt();
+        if (choose == 1)
+            removeData(Admin.getFilePathBahanPangan(),"Penjual");
+        else
+            removeData(Admin.getFilePathDataPO(),"Pembeli");
+    }
+
     public static void menu() {
         Admin.clear();
         int choose;
         boolean isRun = true;
         while (isRun) {
             System.out.println("===== MENU ADMIN ======");
-            System.out.print("1. Set harga pasar\n2. Tambah user\n3. Exit\nMasukan pilihan anda (1-4) : ");
+            System.out.print("1. Set harga pasar\n2. Tambah user\n3. Bersihkan data\n4. Exit\nMasukan pilihan anda (1-4) : ");
             choose = inputObj.nextInt();
             switch (choose) {
                 case 1:
@@ -185,6 +181,9 @@ public class Admin {
                     addUser();
                     break;
                 case 3:
+                    cleanData();
+                    break;
+                case 4:
                     isRun = false;
                     System.out.println("Keluar dari Menu Admin");
                     inputObj.nextLine();
@@ -195,18 +194,6 @@ public class Admin {
             }
         }
     }
-
-    // public static void setPasar() {
-    //     double harga;
-    //     for (int i = 0; i < 3; i++) {
-    //         System.out.print("Masukkan harga pasar untuk " + Admin.getJenis(i) + " : ");
-    //         harga = inputObj.nextDouble();
-    //         Admin.setArrHargaJenis(harga, i);
-    //     }
-    //     for (double x : arrHargaPangan) {
-    //         System.out.println("Harga = " + x);
-    //     }
-    // }
 
     public static void setPasar() {
         double harga;
