@@ -29,7 +29,7 @@ public class Penjual {
         boolean isRun = true;
         while (isRun) {
             System.out.println("\n====== MENU PENJUAL =======");
-            System.out.print("1. Tampilkan bahan pangan di Pasar\n2. Tambahkan bahan pangan\n3. Tampilkan Pre-Order yang tersedia\n4. Layani Pre-Order\n5. Keluar\nMasukan pilihan anda (1-5): ");
+            System.out.print("1. Tampilkan bahan pangan di Pasar\n2. Tambahkan bahan pangan\n3. Tampilkan Pre-Order yang tersedia\n4. Layani Pre-Order\n5. History Penjualan\n6. Keluar\nMasukan pilihan anda (1-6): ");
             choose = inputObj.nextInt();
             switch (choose) {
                 case 1:
@@ -50,6 +50,9 @@ public class Penjual {
                         System.out.println("TIDAK ADA PRE-ORDER YANG TERSEDIA");
                     break;
                 case 5:
+                    BahanPangan.displayDataPangan(Admin.getFilePathHistoryPenjualan(),"BAHAN PANGAN");
+                    break;
+                case 6:
                     isRun = false;
                     break;
                 default:

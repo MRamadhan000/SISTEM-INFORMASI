@@ -14,6 +14,7 @@ public class Admin {
     private final static String filePathBahanPangan = "src/bahanPangan/dataBahanPangan.txt";
     private final static String filePathDataPO = "src/bahanPangan/dataPreOrder.txt";
     private final static String filePathDataUser = "src/bahanPangan/dataUser.txt";
+    private final static String filePathHistoryPenjualan = "src/bahanPangan/historyPenjualan.txt";
     private final static String[] arrJenisPangan = {"Padi","Jagung","Kedelai"};
     private static double[] arrHargaPangan = {8000,7000,10000};//SET HARGA
     private static String date;
@@ -170,5 +171,11 @@ public class Admin {
     public static String getFilePathDataUser(){
         return filePathDataUser;
     }
+
+    public static String getFilePathHistoryPenjualan(){
+        return filePathHistoryPenjualan;
+    }
+
+    
 
 }
