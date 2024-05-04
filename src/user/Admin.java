@@ -1,4 +1,5 @@
 package user;
+
 import bahanPangan.BahanPangan;
 
 import java.io.BufferedReader;
@@ -14,16 +15,45 @@ public class Admin {
     private final static String filePathBahanPangan = "src/bahanPangan/dataBahanPangan.txt";
     private final static String filePathDataPO = "src/bahanPangan/dataPreOrder.txt";
     private final static String filePathDataUser = "src/bahanPangan/dataUser.txt";
-    private final static String[] arrJenisPangan = {"Padi","Jagung","Kedelai"};
-    private static double[] arrHargaPangan = {8000,7000,10000};//SET HARGA
+    private final static String[] arrJenisPangan = { "Padi", "Jagung", "Kedelai" };
+    private static double[] arrHargaPangan = { 8000, 7000, 10000 };// SET HARGA
     private static String date;
     static Scanner inputObj = new Scanner(System.in);
     static String user = "admin";
     static String pass = "admin123";
 
     // CONTOH PENERAPANNYA
-//    boolean isValid = isUser(Admin.getFilePathDataUser(), usename,password,"Pembeli");
-    public static Boolean isUser(String filePath,String id, String password,String role){ // role = "Penjual" /"Pembeli"
+    // boolean isValid = isUser(Admin.getFilePathDataUser(),
+    // usename,password,"Pembeli");
+    public static void addUser() {
+        Scanner input = new Scanner(System.in);
+        String role;
+        System.out.println("Pilih user yang akan ditambahkan \n 1. Pembeli \n 2. Penjual \n masukkan pilihan anda 1-2 :");
+        int choice = input.nextInt();
+        switch (choice) {
+            case 1:
+                role = "Pembeli";
+                break;
+            case 2:
+                role = "Penjual";
+                break;
+            default:
+                System.err.println("masukkan pilihan 1 atau 2 ");
+                input.close();
+                return;
+        }
+        System.out.print("Masukkan id user : ");
+        String id = input.nextLine();
+        // inputObj.nextLine();
+        System.out.print("Masukkan password user : ");
+        String password = input.nextLine();
+        addUserAction(id, password, role);
+        input.close();
+    }
+    
+
+    public static Boolean isUser(String filePath, String id, String password, String role) { // role = "Penjual"
+                                                                                             // /"Pembeli"
         boolean isFoundRole = false;
         boolean isValidUser = false;
         String line;
@@ -31,11 +61,11 @@ public class Admin {
             BufferedReader reader = new BufferedReader(new FileReader(filePath));
             while ((line = reader.readLine()) != null) {
                 String[] partsData = line.split("\\s+");
-                if(partsData[0].equals(role))
+                if (partsData[0].equals(role))
                     isFoundRole = true;
-                if(partsData[0].equals("-"))
+                if (partsData[0].equals("-"))
                     isFoundRole = false;
-                if(isFoundRole && partsData[0].equals(id) && partsData[1].equals(password)){
+                if (isFoundRole && partsData[0].equals(id) && partsData[1].equals(password)) {
                     isValidUser = true;
                 }
             }
@@ -46,20 +76,20 @@ public class Admin {
         return isValidUser;
     }
 
-    public static void addUser(String id,String password, String role){
+    public static void addUserAction(String id, String password, String role) {
         String filePath = Admin.getFilePathDataUser();
         boolean isFoundRole = false;
         String line;
         ArrayList<String> data = new ArrayList<>();
         try {
-            //Membaca file baris per baris
+            // Membaca file baris per baris
             BufferedReader reader = new BufferedReader(new FileReader(filePath));
             // Membaca setiap baris
             while ((line = reader.readLine()) != null) {
                 String[] partsData = line.split("\\s+");
-                if(partsData[0].equals(role))
+                if (partsData[0].equals(role))
                     isFoundRole = true;
-                else if(isFoundRole && !partsData[0].equals("Id")) {
+                else if (isFoundRole && !partsData[0].equals("Id")) {
                     String dataString = String.format("%-15s%-8s", id, password);
                     data.add(dataString);
                     isFoundRole = false;
@@ -71,19 +101,19 @@ public class Admin {
         } catch (IOException e) {
             System.err.println("Error reading the file: " + e.getMessage());
         }
-        BahanPangan.writeToFile(filePath,data);
+        BahanPangan.writeToFile(filePath, data);
     }
 
-    public static boolean isFileExist(){
+    public static boolean isFileExist() {
         boolean isHaveData = false;
         File file = new File(Admin.getFilePathBahanPangan());
-        if(file.exists())
+        if (file.exists())
             return true;
         else
             return false;
     }
 
-    public static void loginAdmin(){
+    public static void loginAdmin() {
         System.out.print("Username: ");
         String username = inputObj.nextLine();
         System.out.print("Password: ");
@@ -95,28 +125,49 @@ public class Admin {
             System.out.println("Sandi atau password salah!!");
         }
     }
-    public static void menu(){
 
-        //menu
+    public static void menu() {
+        int choose;
+        boolean isRun = true;
+        while (isRun) {
+            System.out.println("===== MENU ADMIN ======");
+            System.out.print("1. Set harga pasar\n2. Tambah user\n3. Exit\nMasukan pilihan anda (1-4) : ");
+            choose = inputObj.nextInt();
+            switch (choose) {
+                case 1:
+                    setPasar();
+                    break;
+                case 2:
+                    addUser();
+                    break;
+                case 3:
+                    isRun = false;
+                    inputObj.nextLine();
+                    break;
+                default:
+                    System.out.println("Masukkan angka yang benar");
+                    break;
+            }
+        }
     }
 
-    public static void setPasar(){
+    public static void setPasar() {
         double harga;
-        for (int i = 0; i < 3; i++){
+        for (int i = 0; i < 3; i++) {
             System.out.print("Masukkan harga pasar untuk " + Admin.getJenis(i) + " : ");
-            harga =inputObj.nextDouble();
-            Admin.setArrHargaJenis(harga,i);
+            harga = inputObj.nextDouble();
+            Admin.setArrHargaJenis(harga, i);
         }
-        for (double x : arrHargaPangan){
+        for (double x : arrHargaPangan) {
             System.out.println("Harga = " + x);
         }
     }
 
-    public static void setDate(){
+    public static void setDate() {
         Admin.date = Admin.getDate();
     }
 
-    public static String getDate(){
+    public static String getDate() {
         Date today = new Date();
         // Membuat objek SimpleDateFormat untuk mengatur format tanggal
         SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy");
@@ -131,7 +182,7 @@ public class Admin {
         return arrHargaPangan[index];
     }
 
-    public static void setArrHargaJenis(double hargaJenis,int index) {
+    public static void setArrHargaJenis(double hargaJenis, int index) {
         Admin.arrHargaPangan[index] = hargaJenis;
     }
 
@@ -139,10 +190,11 @@ public class Admin {
         return filePathBahanPangan;
     }
 
-    public static String getFilePathDataPO(){
+    public static String getFilePathDataPO() {
         return filePathDataPO;
     }
-    public static String getFilePathDataUser(){
+
+    public static String getFilePathDataUser() {
         return filePathDataUser;
     }
 
