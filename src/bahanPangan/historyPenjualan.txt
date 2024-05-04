@@ -2,3 +2,4 @@ IdBahan     Jenis        HargaPerKg    JumlahAwal      JumlahAkhir      IdPenjua
 3360Q        Jagung        8400.0          13.0            10.0            1001A           2002A
 1178H        Kedelai       9000.0          21.0            12.0            1001A           2002A    
 3360Q        Jagung        8400.0          10.0            2.0             1001A           2002A    
+3360Q        Jagung        8400.0          2.0             1.0             1001A           2002A    

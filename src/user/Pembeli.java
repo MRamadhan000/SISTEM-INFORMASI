@@ -67,7 +67,8 @@ public class Pembeli {
                     Pembeli.displayNotif(Admin.getFilePathDataPO(),userId);
                 case 5:
                     isRun = false;
-                    System.out.println("Keluar dari Menu Pembeli");
+                    System.out.println("Keluar dari Menu Penjual");
+                    Admin.clear();
                     break;
                 default:
                     System.out.println("Masukkan angka yang benar");
