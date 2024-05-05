@@ -17,16 +17,33 @@ public class Admin {
     private final static String filePathBahanPangan = "src/bahanPangan/dataBahanPangan.txt";
     private final static String filePathDataPO = "src/bahanPangan/dataPreOrder.txt";
     private final static String filePathDataUser = "src/bahanPangan/dataUser.txt";
+// <<<<<<< HEAD
     private final static String[] arrJenisPangan = { "Padi", "Jagung", "Kedelai" };
+<<<<<<< HEAD
     private static double[] arrHargaPangan = { 8000, 7000, 10000 };// SET HARGA
+=======
+    // private static double[] arrHargaPangan = {8000,7000,10000};// SET HARGA
+    private static double[] arrHargaPangan = {getHarga(),getHarga(),getHarga()};// SET HARGA
+// =======
+>>>>>>> 813b36fd04fcd1643336ae17a1dfb49c545e87f5
     private final static String filePathHistoryPenjualan = "src/bahanPangan/historyPenjualan.txt";
+    // private final static String[] arrJenisPangan = {"Padi","Jagung","Kedelai"};
+    // private static double[] arrHargaPangan = {8000,7000,10000};//SET HARGA
+// >>>>>>> 733b287d4223fefbc68e62f4aaa26e015abc1976
     private static String date;
     private static final Scanner inputObj = new Scanner(System.in);
     static String user = "admin";
     static String pass = "admin123";
 
+<<<<<<< HEAD
+=======
+    // CONTOH PENERAPANNYA
+    // boolean isValid = isUser(Admin.getFilePathDataUser(),
+    // usename,password,"Pembeli");
+>>>>>>> 813b36fd04fcd1643336ae17a1dfb49c545e87f5
     public static void addUser() {
         String role;
+<<<<<<< HEAD
         String id;
         String password;
 
@@ -64,6 +81,37 @@ public class Admin {
             break; 
         } while (true);
     }
+=======
+        System.out.println("Pilih user yang akan ditambahkan \n 1. Pembeli \n 2. Penjual \n masukkan pilihan anda 1-2 :");
+        int choice = input.nextInt();
+        switch (choice) {
+            case 1:
+                role = "Pembeli";
+                break;
+            case 2:
+                role = "Penjual";
+                break;
+            default:
+                System.err.println("masukkan pilihan 1 atau 2 ");
+                input.close();
+                return;
+        }
+        String id = Penjual.generateID();
+        System.out.print("id user anda "+ id);
+        System.out.print("Masukkan password user : ");
+        String password = input.nextLine();
+        if (isUser(filePathDataUser, id, password, role)) {
+            // Jika user tidak ditemukan, tambahkan user
+            addUserAction(id, password, role);
+            System.out.println("Data " + role + " berhasil ditambahkan!!!");
+        } else {
+            // Jika user ditemukan, lakukan sesuatu di sini
+            System.out.println("Data yang anda tambahkan sudah ada tolong ");
+        }
+        input.close();
+    }
+    
+>>>>>>> 813b36fd04fcd1643336ae17a1dfb49c545e87f5
 
     public static Boolean isUser(String filePath, String id, String password, String role) { // role = "Penjual"
                                                                                              // /"Pembeli"
@@ -139,7 +187,14 @@ public class Admin {
             return false;
     }
 
+<<<<<<< HEAD
     public static void removeData(String filePath, String role) {
+=======
+// <<<<<<< HEAD
+    // public static void loginAdmin() { 
+// =======
+    public static void removeData(String filePath,String role){
+>>>>>>> 813b36fd04fcd1643336ae17a1dfb49c545e87f5
         String line;
         ArrayList<String> data = new ArrayList<>();
         try {
@@ -164,7 +219,12 @@ public class Admin {
         BahanPangan.writeToFile(filePath, data);
     }
 
+<<<<<<< HEAD
     public static void loginAdmin() {
+=======
+    public static void loginAdmin(){
+// >>>>>>> 733b287d4223fefbc68e62f4aaa26e015abc1976
+>>>>>>> 813b36fd04fcd1643336ae17a1dfb49c545e87f5
         System.out.print("Username: ");
         String username = inputObj.nextLine();
         System.out.print("Password: ");
@@ -177,6 +237,7 @@ public class Admin {
         }
     }
 
+<<<<<<< HEAD
     public static void cleanData() {
         System.out.print("1. Bersihkan data bahan pangan\n2. Bersihlan data pre-order\nMasukan pilihan anda : ");
         int choose = inputObj.nextInt();
@@ -186,26 +247,29 @@ public class Admin {
             removeData(Admin.getFilePathDataPO(), "Pembeli");
     }
 
+=======
+>>>>>>> 813b36fd04fcd1643336ae17a1dfb49c545e87f5
     public static void menu() {
         Admin.clear();
         int choose;
         boolean isRun = true;
         while (isRun) {
             System.out.println("===== MENU ADMIN ======");
+<<<<<<< HEAD
             System.out.print(
                     "1. Set harga pasar\n2. Tambah user\n3. Bersihkan data\n4. Exit\nMasukan pilihan anda (1-4) : ");
+=======
+            System.out.print("1. Set harga pasar\n2. Tambah user\n3. Exit\nMasukan pilihan anda (1-4) : ");
+>>>>>>> 813b36fd04fcd1643336ae17a1dfb49c545e87f5
             choose = inputObj.nextInt();
             switch (choose) {
                 case 1:
-                    setPasar();
+                    // setPasar();
                     break;
                 case 2:
                     addUser();
                     break;
                 case 3:
-                    cleanData();
-                    break;
-                case 4:
                     isRun = false;
                     System.out.println("Keluar dari Menu Admin");
 
@@ -217,6 +281,18 @@ public class Admin {
             }
         }
     }
+
+    // public static void setPasar() {
+    //     double harga;
+    //     for (int i = 0; i < 3; i++) {
+    //         System.out.print("Masukkan harga pasar untuk " + Admin.getJenis(i) + " : ");
+    //         harga = inputObj.nextDouble();
+    //         Admin.setArrHargaJenis(harga, i);
+    //     }
+    //     for (double x : arrHargaPangan) {
+    //         System.out.println("Harga = " + x);
+    //     }
+    // }
 
     public static void setPasar() {
         double harga;
@@ -232,6 +308,17 @@ public class Admin {
             System.out.println("Harga = " + x);
         }
     }
+
+    public static double getHarga(){
+        double harga;
+        double pembulatan;
+        Random rand = new Random();
+        harga = 5000 + (rand.nextDouble() * 5000);
+        pembulatan = Math.round(harga / 1000) * 1000;
+        return pembulatan;
+
+    }
+    
 
     public static void setDate() {
         Admin.date = Admin.getDate();
