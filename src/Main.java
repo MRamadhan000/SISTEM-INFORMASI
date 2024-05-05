@@ -4,9 +4,9 @@ import user.Pembeli;
 import java.util.Scanner;
 
 public class Main {
+    private static final Scanner inputObj = new Scanner(System.in);
     public static void main(String[] args) {
         Admin.clear();
-        Scanner inputObj = new Scanner(System.in);
         boolean isRun = true;
         int choose = 0;
         while (isRun) {

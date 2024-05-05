@@ -18,25 +18,26 @@ public class Admin {
     private final static String filePathDataPO = "src/bahanPangan/dataPreOrder.txt";
     private final static String filePathDataUser = "src/bahanPangan/dataUser.txt";
     private final static String[] arrJenisPangan = { "Padi", "Jagung", "Kedelai" };
-    private static double[] arrHargaPangan = {8000,7000,10000};// SET HARGA
+    private static double[] arrHargaPangan = { 8000, 7000, 10000 };// SET HARGA
     private final static String filePathHistoryPenjualan = "src/bahanPangan/historyPenjualan.txt";
     private static String date;
-    static Scanner inputObj = new Scanner(System.in);
+    private static final Scanner inputObj = new Scanner(System.in);
     static String user = "admin";
     static String pass = "admin123";
+
     public static void addUser() {
-        Scanner input = new Scanner(System.in);
         String role;
         String id;
         String password;
-    
+
         do {
             System.out.println("Pilih user yang akan ditambahkan:");
             System.out.println("1. Pembeli");
             System.out.println("2. Penjual");
             System.out.print("Masukkan pilihan anda (1-2): ");
-            int choice = input.nextInt();
-    
+            int choice = inputObj.nextInt();
+            inputObj.nextLine(); 
+
             switch (choice) {
                 case 1:
                     role = "Pembeli";
@@ -48,28 +49,21 @@ public class Admin {
                     System.err.println("Masukkan pilihan 1 atau 2");
                     continue; 
             }
-    
-            id = Penjual.generateID();
-            System.out.println("ID user baru anda adalah: " + id);
-            
-            input.nextLine(); 
-            
+
+            do {
+                id = Penjual.generateID();
+            } while (!isIdUnique(id, getFilePathDataUser())); 
+            System.out.println("ID user baru Anda adalah: " + id);
+
             System.out.print("Masukkan password user: ");
-            password = input.nextLine();
-    
-            if (!isUser(filePathDataUser, id, password, role)) {
-                addUserAction(id, password, role);
-                System.out.println("Data " + role + " berhasil ditambahkan!!!");
-                break; 
-            } else {
-                System.out.println("Data yang Anda tambahkan sudah ada. Silakan coba lagi.");
-            }
+            password = inputObj.nextLine();
+
+            addUserAction(id, password, role);
+            System.out.println("Data " + role + " berhasil ditambahkan!!!");
+
+            break; 
         } while (true);
-    
-        input.close();
     }
-    
-    
 
     public static Boolean isUser(String filePath, String id, String password, String role) { // role = "Penjual"
                                                                                              // /"Pembeli"
@@ -93,6 +87,20 @@ public class Admin {
             System.err.println("Error reading the file: " + e.getMessage());
         }
         return isValidUser;
+    }
+
+    public static boolean isIdUnique(String id, String filePath) {
+        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                if (line.startsWith(id)) {
+                    return false;
+                }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return true;
     }
 
     public static void addUserAction(String id, String password, String role) {
@@ -131,33 +139,32 @@ public class Admin {
             return false;
     }
 
-    public static void removeData(String filePath,String role){
+    public static void removeData(String filePath, String role) {
         String line;
         ArrayList<String> data = new ArrayList<>();
         try {
             BufferedReader reader = new BufferedReader(new FileReader(filePath));
-            for (int i = 0; i < 2;i++) {
+            for (int i = 0; i < 2; i++) {
                 line = reader.readLine();
                 data.add(line);
             }
             while ((line = reader.readLine()) != null) {
                 String[] partsData = line.split("\\s+");
-                if(role.equals("Penjual")){
-                    if(partsData[4].equals("0.0"))
+                if (role.equals("Penjual")) {
+                    if (partsData[4].equals("0.0"))
                         continue;
-                }else
-                    if(!partsData[4].equals("BELUM"))
-                        continue;
-                    data.add(line);
+                } else if (!partsData[4].equals("BELUM"))
+                    continue;
+                data.add(line);
             }
             reader.close();
         } catch (IOException e) {
             System.err.println("Error reading the file: " + e.getMessage());
         }
-        BahanPangan.writeToFile(filePath,data);
+        BahanPangan.writeToFile(filePath, data);
     }
 
-    public static void loginAdmin(){
+    public static void loginAdmin() {
         System.out.print("Username: ");
         String username = inputObj.nextLine();
         System.out.print("Password: ");
@@ -170,13 +177,13 @@ public class Admin {
         }
     }
 
-    public static void cleanData(){
+    public static void cleanData() {
         System.out.print("1. Bersihkan data bahan pangan\n2. Bersihlan data pre-order\nMasukan pilihan anda : ");
         int choose = inputObj.nextInt();
         if (choose == 1)
-            removeData(Admin.getFilePathBahanPangan(),"Penjual");
+            removeData(Admin.getFilePathBahanPangan(), "Penjual");
         else
-            removeData(Admin.getFilePathDataPO(),"Pembeli");
+            removeData(Admin.getFilePathDataPO(), "Pembeli");
     }
 
     public static void menu() {
@@ -185,7 +192,8 @@ public class Admin {
         boolean isRun = true;
         while (isRun) {
             System.out.println("===== MENU ADMIN ======");
-            System.out.print("1. Set harga pasar\n2. Tambah user\n3. Bersihkan data\n4. Exit\nMasukan pilihan anda (1-4) : ");
+            System.out.print(
+                    "1. Set harga pasar\n2. Tambah user\n3. Bersihkan data\n4. Exit\nMasukan pilihan anda (1-4) : ");
             choose = inputObj.nextInt();
             switch (choose) {
                 case 1:
@@ -200,7 +208,7 @@ public class Admin {
                 case 4:
                     isRun = false;
                     System.out.println("Keluar dari Menu Admin");
-                    
+
                     inputObj.nextLine();
                     break;
                 default:
@@ -248,7 +256,6 @@ public class Admin {
         Admin.arrHargaPangan[index] = hargaJenis;
     }
 
-
     public static String getFilePathBahanPangan() {
         return filePathBahanPangan;
     }
@@ -261,7 +268,7 @@ public class Admin {
         return filePathDataUser;
     }
 
-    public static String getFilePathHistoryPenjualan(){
+    public static String getFilePathHistoryPenjualan() {
         return filePathHistoryPenjualan;
     }
 
@@ -274,6 +281,5 @@ public class Admin {
             e.printStackTrace();
         }
     }
-
 
 }
