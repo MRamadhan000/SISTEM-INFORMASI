@@ -8,25 +8,23 @@ public class Main {
         Admin.clear();
         Scanner inputObj = new Scanner(System.in);
         boolean isRun = true;
-        int choose;
+        int choose = 0;
         while (isRun) {
             System.out.println("===== MENU =======");
             System.out.print("1. Login sebagai penjual\n2. Login sebagai pembeli\n3. Login sebagai admin\n4. Exit\nMasukkan pilihan anda (1-4): ");
             choose = inputObj.nextInt();
             switch (choose) {
                 case 1:
-                    Penjual.menu("1001A");
-                    //Penjual.loginActionPenjual();
-                    //Admin.clear();
+                    Penjual.loginActionPenjual();
+                    Admin.clear();
                     break;
                 case 2:
-                    Pembeli.menu("2002A");
-                    //Pembeli.loginActionPembeli();
-                    //Admin.clear();
+                    Pembeli.loginActionPembeli();
+                    Admin.clear();
                     break;
                 case 3:
-                    //Admin.loginAdmin();
-                    //Admin.clear();
+                    Admin.loginAdmin();
+                    Admin.clear();
                     break;
                 case 4:
                     isRun = false;
@@ -36,12 +34,5 @@ public class Main {
                     break;
             }
         }
-
     }
-
-
-
-
-
-
 }

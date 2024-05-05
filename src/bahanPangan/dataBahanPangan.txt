@@ -1,5 +1,6 @@
 21/03/2023
 IdBahan      Jenis        HargaPerKg    JumlahAwal      JumlahAkhir      IdPenjual
+<<<<<<< HEAD
 2176Q        Padi          6400.0          12.0            12.0            1001A    
 3306U        Padi          10000.0         10.0            10.0            1001A    
 7207W        Padi          9000.0          200.0           200.0           1001A    
@@ -15,3 +16,10 @@ IdBahan      Jenis        HargaPerKg    JumlahAwal      JumlahAkhir      IdPenju
 5784Q        Kedelai       9000.0          14.0            14.0            1001A    
 1178H        Kedelai       9000.0          21.0            12.0            1001A    
 9044O        Kedelai       12000.0         17.0            7.0             1001A    
+=======
+1152R        Padi          8000.0          12.0            8.0             1001A    
+4116B        Padi          9000.0          14.0            2.0             1001A    
+7931O        Padi          8500.0          13.0            13.0            1001A    
+2693K        Kedelai       9000.0          14.0            14.0            1001A    
+2417R        Jagung        8000.0          15.0            15.0            1001A    
+>>>>>>> dda19bea994a47c60f62ba82dd7836e87ea6f619
