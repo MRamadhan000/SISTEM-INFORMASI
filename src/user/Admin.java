@@ -19,7 +19,8 @@ public class Admin {
     private final static String filePathDataUser = "src/bahanPangan/dataUser.txt";
 // <<<<<<< HEAD
     private final static String[] arrJenisPangan = { "Padi", "Jagung", "Kedelai" };
-    private static double[] arrHargaPangan = {8000,7000,10000};// SET HARGA
+    // private static double[] arrHargaPangan = {8000,7000,10000};// SET HARGA
+    private static double[] arrHargaPangan = {getHarga(),getHarga(),getHarga()};// SET HARGA
 // =======
     private final static String filePathHistoryPenjualan = "src/bahanPangan/historyPenjualan.txt";
     // private final static String[] arrJenisPangan = {"Padi","Jagung","Kedelai"};
@@ -179,7 +180,7 @@ public class Admin {
             choose = inputObj.nextInt();
             switch (choose) {
                 case 1:
-                    setPasar();
+                    // setPasar();
                     break;
                 case 2:
                     addUser();
@@ -223,6 +224,17 @@ public class Admin {
             System.out.println("Harga = " + x);
         }
     }
+
+    public static double getHarga(){
+        double harga;
+        double pembulatan;
+        Random rand = new Random();
+        harga = 5000 + (rand.nextDouble() * 5000);
+        pembulatan = Math.round(harga / 1000) * 1000;
+        return pembulatan;
+
+    }
+    
 
     public static void setDate() {
         Admin.date = Admin.getDate();
