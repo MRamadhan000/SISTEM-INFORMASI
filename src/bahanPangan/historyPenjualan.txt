@@ -2,3 +2,4 @@ IdBahan     Jenis        HargaPerKg    JumlahAwal      JumlahAkhir      IdPenjua
 1152R        Padi          8000.0          12.0            10.0            1001A           2002A    
 1152R        Padi          8000.0          10.0            8.0             1001A           2002A    
 4116B        Padi          9000.0          14.0            2.0             1001A           2002A    
+6417X        Padi          7000.0          20.0            10.0            1617S           4060V    

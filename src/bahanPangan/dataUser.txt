@@ -1,11 +1,8 @@
 Penjual
-Id           Password
-123450         ABC12
-1923X          2827D
-1911A          1234X
+Id           Password   
+1617S          pass2   
 -
 Pembeli
 Id           Password
-123450         ABC11   
-123450         ABC000  
-1923X          2822A
+4060V          pass2  
+

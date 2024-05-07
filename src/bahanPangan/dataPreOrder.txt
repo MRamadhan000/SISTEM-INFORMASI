@@ -1,4 +1,3 @@
 21/03/2023
-IdBahan       Jenis      HargaPerKg       JumlahPerKg    Keterangan      IdPembeli
-9410X        Padi          12000.0         14.0            1001A           2002A    
-4659Q        Kedelai       8000.0          12.0            BELUM           2002A    
+IdBahan       Jenis      HargaPerKg       JumlahPerKg    Keterangan      IdPembeli    
+1379I        Jagung        6000.0          5.0             1617S           4060V    
