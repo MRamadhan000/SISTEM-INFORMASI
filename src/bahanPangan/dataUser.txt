@@ -1,8 +1,10 @@
 Penjual
 Id           Password   
 1617S          pass2   
+dika            1
 -
 Pembeli
 Id           Password
 4060V          pass2  
+dika            1
 

@@ -50,9 +50,9 @@ public class Pembeli {
                     Pembeli.displayNotif(Admin.getFilePathDataPO(),userId);
                     break;
                 case 5:
-                    isRun = false;
-                    System.out.println("Keluar dari Menu Penjual");
-                    Admin.clear();
+                System.out.println("Keluar dari Menu Penjual");
+                Admin.clear();
+                Main.display();
                     break;
                 default:
                     System.out.println("Masukkan angka yang benar");
@@ -96,6 +96,25 @@ public class Pembeli {
             System.out.println(id + " TIDAK DITEMUKAN");
     }
 
+    // public static void buatPreOrder(String userId) {
+    //     String jenis;
+    //     int choose;
+    //     System.out.print(
+    //             "====== MENU INPUT BAHAN PANGAN ======\n1. Padi\n2. Jagung\n3. Kedelai\nPilih jenis yang anda inginkan : ");
+    //     do {
+    //         choose = inputObj.nextInt();
+    //         if (choose < 1 || choose > 3)
+    //             System.out.println("Masukan angka yang benar");
+    //     } while (choose < 1 || choose > 3);
+    //     jenis = Admin.getJenis(choose - 1);
+    //     System.out.print("Masukkan harga " + jenis + " /Kg: ");
+    //     double harga = inputObj.nextDouble();
+    //     System.out.print("Masukkan jumlah keseluruhan: ");
+    //     double jumlah = inputObj.nextDouble();
+    //     BahanPangan bahanPangan = new BahanPangan(jenis, harga, jumlah, Penjual.generateID());
+    //     BahanPangan.appeandToTxt(bahanPangan, Admin.getFilePathDataPO(),"Pembeli",userId);
+    // }
+
     public static void buatPreOrder(String userId) {
         String jenis;
         int choose;
@@ -107,12 +126,18 @@ public class Pembeli {
                 System.out.println("Masukan angka yang benar");
         } while (choose < 1 || choose > 3);
         jenis = Admin.getJenis(choose - 1);
+        System.out.println("Harga Minimum " + jenis +" : "+ BahanPangan.formatCurrencyIDR(Penjual.getMinsHarga(choose)));
+        System.out.println("Harga Maksimum " + jenis +" : "+ BahanPangan.formatCurrencyIDR(Penjual.getMaksHarga(choose)));
         System.out.print("Masukkan harga " + jenis + " /Kg: ");
         double harga = inputObj.nextDouble();
-        System.out.print("Masukkan jumlah keseluruhan: ");
-        double jumlah = inputObj.nextDouble();
-        BahanPangan bahanPangan = new BahanPangan(jenis, harga, jumlah, Penjual.generateID());
-        BahanPangan.appeandToTxt(bahanPangan, Admin.getFilePathDataPO(),"Pembeli",userId);
+        boolean isValid = Penjual.cekHargaPasar(choose,harga);
+        if(isValid){
+            System.out.print("Masukkan jumlah keseluruhan: ");
+            double jumlah = inputObj.nextDouble();
+            BahanPangan bahanPangan = new BahanPangan(jenis, harga, jumlah, Penjual.generateID());
+            BahanPangan.appeandToTxt(bahanPangan, Admin.getFilePathDataPO(),"Pembeli",userId);
+        }else
+            System.out.println("HARGA YANG DITAWARKAN TIDAK SESUAI");
     }
 
     public static void displayNotif(String filePath,String userId){

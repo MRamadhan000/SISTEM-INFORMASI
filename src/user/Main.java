@@ -1,12 +1,11 @@
-import user.Admin;
-import user.Penjual;
-import user.Pembeli;
+package user;
+
 import java.util.Scanner;
 
 public class Main {
     private static final Scanner inputObj = new Scanner(System.in);
 
-    public static void main(String[] args) {
+    public static void display(){
         Admin.clear();
         boolean isRun = true;
 
@@ -41,5 +40,9 @@ public class Main {
                 inputObj.nextLine(); 
             }
         }
+    }
+
+    public static void main(String[] args) {
+      display();
     }
 }

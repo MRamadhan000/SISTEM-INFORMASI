@@ -1,3 +1,4 @@
 21/03/2023
 IdBahan       Jenis      HargaPerKg       JumlahPerKg    Keterangan      IdPembeli    
-1379I        Jagung        6000.0          5.0             1617S           4060V    
+8155W        Jagung        8000.0          20.0            BELUM           4060V    
+4629B        Padi          5999.0          20.0            BELUM           4060V    

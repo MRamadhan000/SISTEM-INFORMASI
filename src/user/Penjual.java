@@ -46,9 +46,10 @@ public class Penjual {
                     Penjual.displayHistory(userId);
                     break;
                 case 6:
-                    isRun = false;
+                    // isRun = false;
                     System.out.println("Keluar dari Menu Penjual");
                     Admin.clear();
+                    Main.display();
                     break;
                 default:
                     System.out.println("Masukkan angka yang benar");
