@@ -21,7 +21,7 @@ public class Pembeli {
             menu(idUser);
         } else {
             System.out.println("Username atau password salah!");
-            input.close();
+            // input.close();
             return;
         }
         input.close();

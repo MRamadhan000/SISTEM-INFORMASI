@@ -102,6 +102,7 @@ public class Penjual {
             menu(idUser);
         } else {
             System.out.println("Username atau password salah!");
+            return;
         }
         input.close();
     }
